@@ -5,9 +5,9 @@
     pageEncoding="UTF-8"%>
     
    <%
-    	String ctx = request.getContextPath();    //콘텍스트명 얻어오기.
-		MemberDto dto = (MemberDto)session.getAttribute("dto");
-	%>
+       String ctx = request.getContextPath();    //콘텍스트명 얻어오기.
+      MemberDto dto = (MemberDto)session.getAttribute("dto");
+   %>
 <title>Insert title here</title>
 
 <%@ include file="inc/usertopbar.jsp" %>
@@ -74,35 +74,52 @@ $(function(){
 </head>
 <body>
 
-	<div class="container">
-		<form id="frm" action="SemiProjectServlet.do" method="post">
-		<input type="hidden" name="command" value="reviewinsert">
-			<div class="Review_header">
-				
-				<h4>이용후기</h4>
-				<p>여러분들의 소중한 후기를 남겨주세요.</p>
-			</div>
-			<hr>
+   <div class="container">
+      <form id="frm" action="SemiProjectServlet.do" method="post">
+      <input type="hidden" name="command" value="reviewinsert">
+         <div class="Review_header">
+            
+            <h4>이용후기</h4>
+            <p>여러분들의 소중한 후기를 남겨주세요.</p>
+         </div>
+         <hr>
 
-			
-			<div class="subject_form">
-				<div class="subject">
-				제목
-				</div>
-				<div class="form-group">
-            		<input type="text" class="form-control" id="inputSubject" name="title">
-        		</div>
-        	</div>
-        	
+         
+         <div class="subject_form">
+         
+            <div class="subject" style="margin-right: 0px;">
+            <span class="input-group-text" id="inputGroupFileAddon01" >제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목</span>
+            </div>
+            <div class="form-group">
+                  <input type="text" class="form-control" id="inputSubject" name="title">
+              </div>
+           </div>
+           
 
-        	
-        	<div class="content_form">
-        		<div class="content">
-        		
+           
+           <div class="content_form">
+              <div class="content">
 
-  <input type='file' accept='text/plain' onchange='openFile(event)'><br>
+
+<!-- 1 -->
+<div class="input-group">
+  <div class="input-group-prepend">
+    <span class="input-group-text" id="inputGroupFileAddon01">업로드</span>
+  </div>
+  <div class="custom-file">
+    <input type="file" class="custom-file-input"accept='text/plain' onchange='openFile(event)' id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+  </div>
+</div>
+<!-- 2 -->
+
+
+
+              
+
+<!--   <input type='file' accept='text/plain' onchange='openFile(event)'><br> -->
   <input type="hidden" name="contentfile" id="contentid" value="">
-
+<br>
 <script>
   var openFile = function(event) {
     var input = event.target;
@@ -115,25 +132,25 @@ $(function(){
     reader.readAsText(input.files[0]);
   };
 </script>
-          	<!-- 글 내용이 들어가는 부분 -->
-        	<div class="content_form">
-        		<div class="content">
-        			내용
-        			<textarea rows="15" cols="120" id="content" name="content"></textarea>
-        		</div>
-        	</div>
-			
-        		</div>
-        	</div>
+             <!-- 글 내용이 들어가는 부분 -->
+           <div class="content_form">
+              <div class="content">
+                 <br>
+                 <textarea rows="15" cols="120" id="content" name="content"></textarea>
+              </div>
+           </div>
+         
+              </div>
+           </div>
 
-		
-		
-		<div class="buttons">
-			<button type="submit" id="save" class="btn btn-primary">작성하기</button>
-			<button type="button" class="btn btn-default" onclick="location.href='SemiProjectServlet.do?command=list'">목록으로</button>
-		</div>
-		</form>
-	</div>
+      
+      
+      <div class="buttons">
+         <button type="submit" id="save" class="btn btn-primary">작성하기</button>
+         <button type="button" class="btn btn-default" onclick="location.href='SemiProjectServlet.do?command=list'">목록으로</button>
+      </div>
+      </form>
+   </div>
 
 
 
