@@ -148,7 +148,7 @@ $(function(){
       <div class="buttons">
          <button type="submit" id="save" class="btn btn-primary">작성하기</button>
          <button type="button" class="btn btn-default" onclick="location.href='SemiProjectServlet.do?command=list'">목록으로</button>
-      </div>
+      </div> 
       </form>
    </div>
 
