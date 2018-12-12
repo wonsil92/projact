@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper의 경로를 설정해준다. Dao에서 여기서 설정한 경로로 쿼리문을 받을 수 있음. -->
+<mapper namespace="com.UTC.RVdocument">
+
+	<resultMap type="RVdocumentDto" id="RVdocumentMap">
+		<!-- property: dto의 필드명 column=db테이블 컬럼명 -->
+		<result property="rv_id" column="RV_ID" /> <!-- 게시글 번호 -->
+		<result property="rv_title" column="RV_TITLE" /> <!-- 글제목 -->
+		<result property="file_id" column="FILE_ID" /> <!-- 파일 -->
+		<result property="rv_view_cnt" column="RV_VIEW_CNT" /> <!-- 조회수 -->
+		<result property="rv_reco_cnt" column="RV_RECO_CNT" /> <!-- 추천수 -->
+		<result property="rv_reply_cnt" column="RV_REPLY_CNT" /> <!-- 댓글수 -->
+		<result property="member_id" column="MEMBER_ID" /> <!-- 회원번호 -->
+		<result property="rv_content" column="RV_CONTENT" /> <!-- 글 내용 -->
+		<result property="rv_regdate" column="RV_REGDATE" /> <!-- 작성일 -->
+		<result property="member_name" column="MEMBER_NAME" />
+		<result property="member_pw" column="MEMBER_PW" />
+		<result property="member_email" column="MEMBER_EMAIL" />
+		<result property="member_role" column="MEMBER_ROLE" />
+		<result property="r" column="R"/>
+	</resultMap>
+
+	<!-- 이용후기게시판 게시글 전체 출력 -->
+	<select id="rvlistAll" resultMap="RVdocumentMap">
+		<!-- SELECT * FROM RVDOCUMENT ORDER BY RV_ID DESC; -->
+		SELECT *
+		FROM MEMBER INNER JOIN RVDOCUMENT
+		ON MEMBER.MEMBER_ID =
+		RVDOCUMENT.MEMBER_ID
+		ORDER BY RV_ID DESC
+
+	</select>
+
+	<!-- 글보기할때 조회수증가 -->
+	<update id="RVupdateViewCount" parameterType="int">
+		<!-- 게시글번호와 회원번호를 받아서 수정한다. -->
+		UPDATE RVDOCUMENT SET
+		RV_VIEW_CNT = RV_VIEW_CNT + 1
+		WHERE RV_ID = #{rv_id}
+	</update>
+	
+	<!-- 이용후기게시판 글보기 -->
+	<select id="rvdetail" parameterType="int"
+		resultType="RVdocumentDto">
+		SELECT *
+		FROM RVDOCUMENT INNER JOIN MEMBER
+		ON
+		MEMBER.MEMBER_ID = RVDOCUMENT.MEMBER_ID
+		WHERE RVDOCUMENT.RV_ID=#{rv_id}
+	</select>
+	
+
+	<!-- 이용후기게시판 글쓰기 -->
+	<insert id="rvwrite" parameterType="RVdocumentDto"
+		statementType="PREPARED">
+		<!-- 게시글번호,제목,파일,조회수,추천수,댓글수,회원번호,글내용,작성일 -->
+		INSERT INTO RVDOCUMENT VALUES
+		(RVSEQ.NEXTVAL,#{rv_title},#{file_id},0,0,0,#{member_id},#{rv_content},SYSDATE)
+	</insert>
+
+	<!-- 이용후기게시판 글수정(자기글만 수정가능) -->
+	<update id="rvupdate" parameterType="RVdocumentDto"
+		statementType="PREPARED">
+		<!-- 게시글번호와 회원번호를 받아서 수정한다. -->
+		UPDATE RVDOCUMENT SET RV_TITLE=#{rv_title}, RV_CONTENT=#{rv_content}
+		WHERE RV_ID=#{rv_id}
+	</update>
+
+	<!-- 이용후기게시판 글삭제(자기글만 삭제가능) -->
+	<delete id="rvdelete" parameterType="int"
+		statementType="PREPARED">
+		DELETE FROM RVDOCUMENT WHERE RV_ID=#{rv_id}
+	</delete>
+	
+		<!-- 이용후기게시판 게시글 10개출력 -->
+	<select id="rvlistTen" resultMap="RVdocumentMap">
+		<!-- SELECT * FROM RVDOCUMENT ORDER BY RV_ID DESC; -->
+		SELECT *
+		FROM MEMBER INNER JOIN RVDOCUMENT
+		ON MEMBER.MEMBER_ID = RVDOCUMENT.MEMBER_ID
+		ORDER BY RV_VIEW_CNT DESC
+
+	</select>
+	
+<!-- 관리자관리자관리자	관리자관리자관리자	관리자관리자관리자	관리자관리자관리자	관리자관리자관리자 -->
+ <!-- 이용후기게시판 게시글 전체 출력 -->
+   <select id="admin_rvlist" resultMap="RVdocumentMap">
+      <!-- SELECT * FROM RVDOCUMENT ORDER BY RV_ID DESC; -->
+      SELECT *
+      FROM MEMBER INNER JOIN RVDOCUMENT
+      ON MEMBER.MEMBER_ID = RVDOCUMENT.MEMBER_ID
+      ORDER BY RV_ID DESC
+
+   </select>
+   
+   <!-- 이용후기게시판 글보기 -->
+   <select id="admin_rvview" parameterType="int" resultType="RVdocumentDto">
+      SELECT *
+      FROM RVDOCUMENT INNER JOIN MEMBER
+      ON MEMBER.MEMBER_ID = RVDOCUMENT.MEMBER_ID
+      WHERE RVDOCUMENT.RV_ID=#{rv_id}
+   </select>
+
+   <!-- 이용후기게시판 글쓰기 -->
+   <insert id="admin_rvwrite" parameterType="RVdocumentDto" statementType="PREPARED">
+		<!-- 게시글번호,제목,파일,조회수,추천수,댓글수,회원번호,글내용,작성일 -->
+		INSERT INTO RVDOCUMENT VALUES
+		(RVSEQ.NEXTVAL,#{rv_title},#{file_id},0,0,0,#{member_id},#{rv_content},SYSDATE)
+   </insert>
+   
+   <!-- 이용후기게시판 글삭제  -->
+   <delete id="admin_rvdelete" parameterType="int" statementType="PREPARED">
+      DELETE FROM RVDOCUMENT WHERE RV_ID=#{rv_id}
+   </delete>
+   
+   <delete id="admin_multi_rvdelete" parameterType="map">
+      DELETE FROM RVDOCUMENT
+      WHERE RV_ID IN
+      <foreach item ="rv_id" collection="rv_id" open="(" close=")" separator=", ">
+         #{rv_id}
+      </foreach>
+   </delete>	
+   
+   <!-- 마이페이지에서 모아보기 -->
+   <select id="rvlistUser" resultMap="RVdocumentMap">
+		SELECT *
+		FROM (SELECT ROWNUM R, RV_TITLE, RV_ID, FILE_ID, RV_REGDATE, RV_REPLY_CNT, MEMBER_ID
+			FROM (SELECT * FROM RVDOCUMENT ORDER BY RV_ID DESC)
+			WHERE MEMBER_ID = #{member_id})
+		ORDER BY R
+	</select>	
+</mapper>	

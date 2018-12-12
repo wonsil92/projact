@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 
+  	   mapper의 경로를 설정해준다.
+  	   Dao에서 여기서 설정한 경로로 쿼리문을 받을 수 있음.	
+   -->
+<mapper namespace="com.UTC.MakeList">
+<resultMap type="MakeBoardDto" id="MakeBoardMap">
+	<!-- property: dto의 필드명  column=db테이블 컬럼명 -->
+		<result property="make_id" column="MAKE_ID"/> <!-- 게시글 번호 -->
+		<result property="make_title" column="MAKE_TITLE"/> <!-- 글제목 -->
+		<result property="make_content" column="MAKE_CONTENT"/> <!-- 글 내용 -->
+		<result property="make_regdate" column="MAKE_REGDATE"/> <!-- 작성일 -->
+		<result property="member_id" column="MEMBER_ID"/> <!-- 회원번호 -->
+		<result property="member_name" column="MEMBER_NAME"/>
+		<result property="member_pw" column="MEMBER_PW"/>
+		<result property="member_email" column="MEMBER_EMAIL"/>
+		<result property="member_role" column="MEMBER_ROLE"/>
+		<result property="r" column="R"/><!-- 게시글 정렬 rownum -->
+	</resultMap>
+	
+	<!-- 마이페이지에서 내가 만든것만 모아보기 -->
+	<select id="makelistUser" resultMap="MakeBoardMap">
+		SELECT *
+		FROM (SELECT ROWNUM R, MAKE_TITLE, MAKE_ID, MAKE_REGDATE, MEMBER_ID
+			FROM (SELECT * FROM MAKEBOARD ORDER BY MAKE_ID DESC)
+			WHERE MEMBER_ID = #{member_id})
+		ORDER BY R
+	</select>
+	
+		<!-- 글삭제(자기글만 삭제가능) -->
+	<delete id="makedelete" parameterType="int" statementType="PREPARED">
+		DELETE FROM MAKEBOARD WHERE MAKE_ID=#{make_id}
+	</delete>
+	
+	<!-- 글쓰기 -->
+	<insert id="makewrite" parameterType="MakeBoardDto" statementType="PREPARED">
+		<!-- 게시글번호,제목,내용,날짜,조회수,댓글수,회원번호 -->
+		INSERT INTO MAKEBOARD VALUES
+		(MAKESEQ.NEXTVAL,#{make_title},#{make_content},SYSDATE,#{member_id})
+	</insert>
+	
+		<!-- 글보기 -->
+	<select id="makedetail" parameterType="int" resultType="MakeBoardDto">
+		SELECT *
+		FROM MAKEBOARD INNER JOIN MEMBER
+		ON MEMBER.MEMBER_ID = MAKEBOARD.MEMBER_ID
+		WHERE MAKEBOARD.MAKE_ID=#{make_id}
+	</select>
+	
+</mapper>

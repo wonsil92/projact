@@ -1,0 +1,141 @@
+.upde:link{
+	color:black;
+}
+#updatediv{
+	text-align: right;
+}
+
+.Review_header {
+	padding-top: 200px;
+}
+
+.Review_header p {
+	font-size: 12px;
+}
+
+.subject, .form-group {
+	display: inline-block;
+}
+
+.subject_form {
+	width: 100%;
+}
+
+.subject {
+	margin-left: 20px;
+	margin-right: 60px;
+}
+
+.writer_form {
+	margin-left: 20px;
+}
+
+.write, .writer {
+	display: inline-block;
+	float: left;
+}
+
+.writer {
+	margin-left: 45px;
+}
+
+.hit, .up {
+	display: inline-block;
+	float: right;
+	margin-right: 30px;
+}
+
+.date_form {
+	display: inline-block;
+	float: right;
+	margin-right: 30px;
+}
+
+.content_form > img {
+	width: 600px;
+	height: 400px;
+	margin-bottom: 50px;
+	margin-top: 20px;
+}
+
+.content {
+	margin-bottom: 400px;
+}
+
+.comment_writer {
+	margin-bottom: 20px;
+	display: inline-block;
+}
+
+.date {
+	display: inline-block;
+	margin-left: 90px;
+}
+
+.apply {
+	display: inline-block;
+	margin-left: 20px;
+}
+
+.apply a {
+	text-decoration: none;
+	color: #000000;
+}
+
+.apply a:hover {
+	color: #000000;
+}
+
+.apply > img {
+	width: 20px;
+	height: 20px;	
+}
+
+.comment_form {
+	margin-bottom: 80px;
+}
+
+textarea, .insert_button {
+	display: inline-block;
+}
+
+button.btn.btn-default {
+	width: 90px;
+	height: 80px;
+	margin-bottom: 65px;
+	margin-left: 20px;
+}
+
+.comment_content {
+	margin-bottom: 30px;
+}
+
+.prev_next {
+	border-top: 1px solid;
+	border-bottom: 1px solid;
+	margin-bottom: 50px;
+}
+
+.prev {
+	border-bottom: 1px solid;
+	height: 30px;
+}
+
+.next {
+	height: 30px;
+}
+
+.button_container {
+	display: inline-block;
+}
+
+button.btn.btn-primary { 
+	display: inline-block;
+ 	float: right; 
+} 
+
+button.btn.btn-danger {
+	display: inline-block;
+	float: right; 
+} 
+

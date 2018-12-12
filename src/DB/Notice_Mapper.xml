@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper의 경로를 설정해준다. Dao에서 여기서 설정한 경로로 쿼리문을 받을 수 있음. -->
+<mapper namespace="com.UTC.Notice">
+
+	<resultMap type="NoticeDto" id="NoticeMap">
+		<!-- property: dto의 필드명 column=db테이블 컬럼명 -->
+		<result property="nt_id" column="NT_ID" /> <!-- 게시글 번호 -->
+		<result property="nt_title" column="NT_TITLE" /> <!-- 글제목 -->
+		<result property="nt_content" column="NT_CONTENT" /> <!-- 글 내용 -->
+		<result property="nt_reply_cnt" column="NT_REPLY_CNT" /> <!-- 댓글수 -->
+		<result property="member_id" column="MEMBER_ID" /> <!-- 회원번호 -->
+		<result property="nt_regdate" column="NT_REGDATE" /> <!-- 작성일 -->
+		<result property="member_name" column="MEMBER_NAME" />
+		<result property="member_pw" column="MEMBER_PW" />
+		<result property="member_email" column="MEMBER_EMAIL" />
+		<result property="member_role" column="MEMBER_ROLE" />
+	</resultMap>
+
+	<!-- 공지사항게시판 게시글 전체 출력 -->
+	<select id="ntlistAll" resultMap="NoticeMap">
+		<!-- SELECT * FROM RVDOCUMENT ORDER BY RV_ID DESC; -->
+		SELECT *
+		FROM MEMBER INNER JOIN NOTICE
+		ON MEMBER.MEMBER_ID =
+		NOTICE.MEMBER_ID
+		ORDER BY NT_ID DESC
+	</select>
+
+	<!-- 글보기할때 조회수증가 -->
+	<update id="NTupdateViewCount" parameterType="int">
+		<!-- 게시글번호와 회원번호를 받아서 수정한다. -->
+		UPDATE NOTICE SET
+		NT_VIEW_CNT = NT_VIEW_CNT + 1
+		WHERE NT_ID = #{nt_id}
+	</update>
+	
+	<!-- 이용후기게시판 글보기 -->
+	<select id="ntdetail" parameterType="int"
+		resultType="NoticeDto">
+		SELECT *
+		FROM NOTICE INNER JOIN MEMBER
+		ON
+		MEMBER.MEMBER_ID = NOTICE.MEMBER_ID
+		WHERE NOTICE.NT_ID=#{nt_id}
+	</select>
+
+	<!-- 이용후기게시판 글쓰기 -->
+	<insert id="ntwrite" parameterType="NoticeDto"
+		statementType="PREPARED">
+		<!-- 게시글번호,제목,내용,조회수,회원번호,작성일 -->
+		INSERT INTO NOTICE VALUES
+		(NTSEQ.NEXTVAL,#{nt_title},#{nt_content},0,#{member_id},SYSDATE)
+	</insert>
+
+	<!-- 이용후기게시판 글수정(자기글만 수정가능) -->
+	<update id="ntupdate" parameterType="NoticeDto"
+		statementType="PREPARED">
+		<!-- 게시글번호와 회원번호를 받아서 수정한다. -->
+		UPDATE NOTICE SET NT_TITLE=#{nt_title}, NT_CONTENT=#{nt_content}
+		WHERE NT_ID=#{nt_id}
+	</update>
+
+	<!-- 이용후기게시판 글삭제(자기글만 삭제가능) -->
+	<delete id="ntdelete" parameterType="int"
+		statementType="PREPARED">
+		DELETE FROM NOTICE WHERE NT_ID=#{nt_id}
+	</delete>
+</mapper>	

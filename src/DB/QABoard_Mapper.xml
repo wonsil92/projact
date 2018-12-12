@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <!-- 
+  	   mapper의 경로를 설정해준다.
+  	   Dao에서 여기서 설정한 경로로 쿼리문을 받을 수 있음.	
+   -->
+<mapper namespace="com.UTC.QAList">
+
+	<resultMap type="QABoardDto" id="QABoardMap">
+	<!-- property: dto의 필드명  column=db테이블 컬럼명 -->
+		<result property="qa_id" column="QA_ID"/> <!-- 게시글 번호 -->
+		<result property="qa_title" column="QA_TITLE"/> <!-- 글제목 -->
+		<result property="qa_content" column="QA_CONTENT"/> <!-- 글 내용 -->
+		<result property="qa_regdate" column="QA_REGDATE"/> <!-- 작성일 -->
+		<result property="qa_view_cnt" column="QA_VIEW_CNT"/> <!-- 조회수 -->
+		<result property="qa_reply_cnt" column="QA_REPLY_CNT"/> <!-- 댓글수 -->
+		<result property="member_id" column="MEMBER_ID"/> <!-- 회원번호 -->
+		<result property="member_name" column="MEMBER_NAME"/>
+		<result property="member_pw" column="MEMBER_PW"/>
+		<result property="member_email" column="MEMBER_EMAIL"/>
+		<result property="member_role" column="MEMBER_ROLE"/>
+		<result property="r" column="R"/><!-- 게시글 정렬 rownum -->
+	</resultMap>
+	
+	<!-- QA게시판 게시글 전체 출력 -->
+	<select id="qalistAll" resultMap="QABoardMap">
+		<!-- SELECT * FROM QABOARD ORDER BY QA_ID DESC -->
+		SELECT *
+		FROM MEMBER INNER JOIN QABOARD
+		ON MEMBER.MEMBER_ID = QABOARD.MEMBER_ID
+		ORDER BY QA_ID DESC
+
+	</select>
+	
+	<!-- QA게시판 글보기 -->
+	<select id="qadetail" parameterType="int" resultType="QABoardDto">
+		SELECT *
+		FROM QABOARD INNER JOIN MEMBER
+		ON MEMBER.MEMBER_ID = QABOARD.MEMBER_ID
+		WHERE QABOARD.QA_ID=#{qa_id}
+	</select>
+
+	<!-- QA게시판 글쓰기 -->
+	<insert id="qawrite" parameterType="QABoardDto" statementType="PREPARED">
+		<!-- 게시글번호,제목,내용,날짜,조회수,댓글수,회원번호 -->
+		INSERT INTO QABOARD VALUES
+		(QASEQ.NEXTVAL,#{qa_title},#{qa_content},SYSDATE,0,0,#{member_id})
+	</insert>
+
+	<!-- QA게시판 글수정(자기글만 수정가능) -->
+	<update id="qaupdate" parameterType="QABoardDto" statementType="PREPARED">
+		<!-- 게시글번호와 회원번호를 받아서 수정한다. -->
+		UPDATE QABOARD SET QA_TITLE=#{qa_title}, QA_CONTENT=#{qa_content} 
+		WHERE QA_ID=#{qa_id}
+	</update>
+	
+	<!-- QA게시판 글삭제(자기글만 삭제가능) -->
+	<delete id="qadelete" parameterType="int" statementType="PREPARED">
+		DELETE FROM QABOARD WHERE QA_ID=#{qa_id}
+	</delete>
+	
+	<!-- 마이페이지에서 내가쓴QA모아보기 -->
+	<select id="qalistUser" resultMap="QABoardMap">
+		SELECT *
+		FROM (SELECT ROWNUM R, QA_TITLE, QA_ID, QA_REGDATE, QA_REPLY_CNT, MEMBER_ID
+			FROM (SELECT * FROM QABOARD ORDER BY QA_ID DESC)
+			WHERE MEMBER_ID = #{member_id})
+		ORDER BY R
+	</select>
+
+	<!-- 글보기할때 조회수증가 -->
+	<update id="QAupdateViewCount" parameterType="int">
+		UPDATE QABOARD SET
+		QA_VIEW_CNT = QA_VIEW_CNT + 1
+		WHERE QA_ID = #{qa_id}
+	</update>
+
+	<!-- 내만페 이미지보이는게시글 일단 qa로 테스트 -->
+	<select id="iMadeUser" resultMap="QABoardMap">
+	SELECT * FROM QABOARD WHERE MEMBER_ID=#{member_id}
+	ORDER BY QA_ID DESC
+	</select>
+
+
+<!-- 관리자 영역 ///////////////////////////////////////////-->
+   
+   <!-- QA게시판 게시글 전체 출력 -->
+   <select id="admin_qalist" resultMap="QABoardMap">
+      <!-- SELECT * FROM QABOARD ORDER BY QA_ID DESC -->
+      SELECT *
+      FROM MEMBER INNER JOIN QABOARD
+      ON MEMBER.MEMBER_ID = QABOARD.MEMBER_ID
+      ORDER BY QA_ID DESC
+
+   </select>
+   
+   <!-- QA게시판 글보기 -->
+   <select id="admin_qaview" parameterType="int" resultType="QABoardDto">
+      SELECT *
+      FROM QABOARD INNER JOIN MEMBER
+      ON MEMBER.MEMBER_ID = QABOARD.MEMBER_ID
+      WHERE QABOARD.QA_ID=#{qa_id}
+   </select>
+
+   <!-- QA게시판 글쓰기 -->
+   <insert id="admin_qawrite" parameterType="QABoardDto" statementType="PREPARED">
+      <!-- 게시글번호,제목,내용,날짜,조회수,댓글수,회원번호 -->
+      INSERT INTO QABOARD VALUES
+      (QASEQ.NEXTVAL,#{qa_title},#{qa_content},SYSDATE,0,0,#{member_id})
+   </insert>
+   
+   <!-- QA게시판 글삭제 -->
+   <delete id="admin_qadelete" parameterType="int" statementType="PREPARED">
+      DELETE FROM QABOARD WHERE QA_ID=#{qa_id}
+   </delete>
+   
+   <delete id="admin_multi_qadelete" parameterType="map">
+      DELETE FROM QABOARD
+      WHERE QA_ID IN
+      <foreach item ="qa_id" collection="qa_id" open="(" close=")" separator=", ">
+         #{qa_id}
+      </foreach>
+   </delete>
+</mapper>	
