@@ -11,7 +11,10 @@
   	<typeAlias type="com.UTC.dto.QABoardDto" alias="QABoardDto"/>
   	<typeAlias type="com.UTC.dto.RVdocumentDto" alias="RVdocumentDto"/>
   	<typeAlias type="com.UTC.dto.NoticeDto" alias="NoticeDto"/>
-  	 <typeAlias type="com.UTC.dto.MakeBoardDto" alias="MakeBoardDto"/>
+  	 <typeAlias type="com.UTC.dto.MakeBoardDto" alias="MakeBoardDto"/>  	 
+  	 <typeAlias type="com.UTC.dto.RVCommentDto" alias="RVCommentDto"/>
+  	 <typeAlias type="com.UTC.dto.QACommentDto" alias="QACommentDto"/>
+  	 
   </typeAliases>
   
   <!-- environment = DB랑접속하기위한설정 -->
@@ -34,7 +37,9 @@
     <mapper resource="DB/QABoard_Mapper.xml"/>
     <mapper resource="DB/RVdocument_Mapper.xml"/>
     <mapper resource="DB/Notice_Mapper.xml"/>
-        <mapper resource="DB/MakeBoard_Mapper.xml"/>
+    <mapper resource="DB/MakeBoard_Mapper.xml"/>
+    <mapper resource="DB/RVComment_Mapper.xml"/>    
+    <mapper resource="DB/QAComment_Mapper.xml"/>
   </mappers>
   
 </configuration>

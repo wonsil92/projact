@@ -19,26 +19,16 @@
 <title>UTC</title>
 
 <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link
-	href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900"
-	rel="stylesheet">
-<link
-	href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i"
-	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
 <link href="css/one-page-wonder.min.css" rel="stylesheet">
 <link href="plugins/ajax/ajax_helper.css" rel="stylesheet">
-<link
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-	rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
 
-<!-- <script src="plugins/ajax/ajax_helper.js"></script> -->
-<!-- <script src="http://code.jquery.com/jquery.min.js"></script> -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="plugins/handlebars/handlebars-v4.0.5.js"></script>
 
 
 </head>

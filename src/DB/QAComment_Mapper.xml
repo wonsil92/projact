@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.UTC.QACommentDto">
+  
+  	<resultMap type="QACommentDto" id="QACommentMap">
+  		<result property="qacomment_id" 	column="QACOMMENT_ID" />
+   		<result property="qagroupno" 		column="QAGROUPNO" /> 
+   		<result property="qagroupsq"		column="QAGROUPSQ" /> 
+  		<result property="qatitletab" 		column="QATITLETAB" /> 
+  		<result property="member_id" 		column="MEMBER_ID" />
+  		<result property="member_name"  	column="MEMBER_NAME" />
+  		<result property="qa_id" 			column="QA_ID" />
+  		<result property="qacomment_content" column="QACOMMENT_CONTENT" />
+  		<result property="qaregdate" 		column="QAREGDATE" />
+  	</resultMap>
+  	
+  	<!-- 댓글 저장하기 -->
+  	<insert id="insertQAComment" parameterType="QACommentDto" useGeneratedKeys="true" keyProperty="id">
+   		INSERT INTO QACOMMENT VALUES ( 
+   				QACOMMENTSQ.NEXTVAL, QAGROUPNOSQ.NEXTVAL, 1, 0, #{member_id, jdbcType=INTEGER}, #{member_name, jdbcType=VARCHAR}, #{qa_id, jdbcType=INTEGER}, #{qacomment_content, jdbcType=VARCHAR}, SYSDATE
+   			) 	
+  	</insert>
+
+<!-- 	<insert id="insertQAComment" parameterType="QACommentDto" useGeneratedKeys="true" keyProperty="id"> -->
+<!-- 		INSERT INTO QACOMMENT VALUES ( -->
+<!-- 			QACOMMENTSQ.NEXTVAL, -->
+<!-- 			(SELECT QAGROUPNO FROM QACOMMENT WHERE QACOMMENT_ID=#{qacomment_id, jdbcType=INTEGER}), -->
+<!-- 			(SELECT QAGROUPSQ FROM QACOMMENT WHERE QACOMMENT_ID=#{qacomment_id, jdbcType=INTEGER}) + 1, -->
+<!-- 			(SELECT QATITLETAB FROM QACOMMENT WHERE QACOMMENT_ID=#{qacomment_id, jdbcType=INTEGER}) + 1, -->
+<!-- 			#{member_id, jdbcType=INTEGER}, #{member_name, jdbcType=VARCHAR}, #{qa_id, jdbcType=INTEGER}, #{qacomment_content, jdbcType=VARCHAR}, SYSDATE -->
+<!-- 		) -->
+<!-- 	</insert> -->
+  	
+  	<!-- 댓글 하나에 대한 정보 조회 -->
+  	<select id="selectQAComment" parameterType="QACommentDto" resultMap="QACommentMap">
+  		SELECT QACOMMENT_ID, QAGROUPNO, QAGROUPSQ, QATITLETAB, MEMBER_ID, MEMBER_NAME, QACOMMENT_CONTENT, QAREGDATE, QA_ID
+  		FROM QACOMMENT
+  		WHERE QACOMMENT_ID=#{qacomment_id}
+  	</select>
+  	
+  	<!-- 하나의 게시물에 속해 있는 모든 댓글을 조회 -->
+  	<select id="selectQACommentList" parameterType="QACommentDto" resultMap="QACommentMap">
+  		SELECT QACOMMENT_ID, QACOMMENT_CONTENT, QAREGDATE, MEMBER_ID, MEMBER_NAME, QA_ID
+  		FROM QACOMMENT
+  		WHERE QA_ID=#{qa_id, jdbcType=INTEGER}
+  		ORDER BY QACOMMENT_ID ASC
+  	</select>
+  	
+  	<!-- 댓글 수정 -->
+  	<update id="updateQAComment" parameterType="QACommentDto">
+  		UPDATE QACOMMENT SET QACOMMENT_CONTENT=#{qacomment_content, jdbcType=VARCHAR}, QAREGDATE=SYSDATE WHERE QACOMMENT_ID=#{qacomment_id}
+  	</update>
+  	
+  	<delete id="deleteQAComment" parameterType="QACommentDto">
+  		DELETE FROM QACOMMENT WHERE QACOMMENT_ID=#{qacomment_id}
+  	</delete>
+  	
+  	<!-- 답글 작성 -->
+  	<update id="insertReplay" parameterType="QACommentDto">
+  		UPDATE QACOMMENT SET QAGROUPSQ=QAGROUPSQ + 1
+  		WHERE SQGROUPNO = (SELECT SQGROUPNO FROM QACOMMENT WHERE QACOMMENT_ID=#{qacomment_id}) AND
+  		QAGROUPSQ > (SELECT QAGROUPSQ FROM QACOMMENT WHERE QACOMMENT_ID={qacomment_id}
+  		)
+  	</update>
+  	
+  </mapper>

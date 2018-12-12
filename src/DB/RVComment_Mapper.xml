@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.UTC.RVCommentDto">
+  
+  	<resultMap type="RVCommentDto" id="RVCommentMap">
+  		<result property="rvcomment_id" 	column="RVCOMMENT_ID" />
+   		<result property="rvgroupno" 		column="RVGROUPNO" /> 
+   		<result property="rvgroupsq"		column="RVGROUPSQ" /> 
+  		<result property="rvtitletab" 		column="RVTITLETAB" /> 
+  		<result property="member_id" 		column="MEMBER_ID" />
+  		<result property="member_name"  	column="MEMBER_NAME" />
+  		<result property="rv_id" 			column="RV_ID" />
+  		<result property="rvcomment_content" column="RVCOMMENT_CONTENT" />
+  		<result property="rvregdate" 		column="RVREGDATE" />
+  	</resultMap>
+  	
+  	<!-- 댓글 저장하기 -->
+  	<insert id="insertRVComment" parameterType="RVCommentDto" useGeneratedKeys="true" keyProperty="id">
+   		INSERT INTO RVCOMMENT VALUES ( 
+   				RVCOMMENTSQ.NEXTVAL, RVGROUPNOSQ.NEXTVAL, 1, 0, #{member_id, jdbcType=INTEGER}, #{member_name, jdbcType=VARCHAR}, #{rv_id, jdbcType=INTEGER}, #{rvcomment_content, jdbcType=VARCHAR}, SYSDATE
+   			) 	
+  	</insert>
+
+<!-- 	<insert id="insertQAComment" parameterType="QACommentDto" useGeneratedKeys="true" keyProperty="id"> -->
+<!-- 		INSERT INTO QACOMMENT VALUES ( -->
+<!-- 			QACOMMENTSQ.NEXTVAL, -->
+<!-- 			(SELECT QAGROUPNO FROM QACOMMENT WHERE QACOMMENT_ID=#{qacomment_id, jdbcType=INTEGER}), -->
+<!-- 			(SELECT QAGROUPSQ FROM QACOMMENT WHERE QACOMMENT_ID=#{qacomment_id, jdbcType=INTEGER}) + 1, -->
+<!-- 			(SELECT QATITLETAB FROM QACOMMENT WHERE QACOMMENT_ID=#{qacomment_id, jdbcType=INTEGER}) + 1, -->
+<!-- 			#{member_id, jdbcType=INTEGER}, #{member_name, jdbcType=VARCHAR}, #{qa_id, jdbcType=INTEGER}, #{qacomment_content, jdbcType=VARCHAR}, SYSDATE -->
+<!-- 		) -->
+<!-- 	</insert> -->
+  	
+  	<!-- 댓글 하나에 대한 정보 조회 -->
+  	<select id="selectRVComment" parameterType="RVCommentDto" resultMap="RVCommentMap">
+  		SELECT RVCOMMENT_ID, RVGROUPNO, RVGROUPSQ, RVTITLETAB, MEMBER_ID, MEMBER_NAME, RVCOMMENT_CONTENT, RVREGDATE, RV_ID
+  		FROM RVComment
+  		WHERE RVCOMMENT_ID=#{rvcomment_id}
+  	</select>
+  	
+  	<!-- 하나의 게시물에 속해 있는 모든 댓글을 조회 -->
+  	<select id="selectRVCommentList" parameterType="RVCommentDto" resultMap="RVCommentMap">
+  		SELECT RVCOMMENT_ID, RVCOMMENT_CONTENT, RVREGDATE, MEMBER_ID, MEMBER_NAME, RV_ID
+  		FROM RVCOMMENT
+  		WHERE RV_ID=#{rv_id, jdbcType=INTEGER}
+  		ORDER BY RVCOMMENT_ID ASC
+  	</select>
+  	
+  	<!-- 댓글 수정 -->
+  	<update id="updateRVComment" parameterType="RVCommentDto">
+  		UPDATE RVCOMMENT SET RVCOMMENT_CONTENT=#{rvcomment_content, jdbcType=VARCHAR}, RVREGDATE=SYSDATE WHERE RVCOMMENT_ID=#{rvcomment_id}
+  	</update>
+  	
+  	<delete id="deleteRVComment" parameterType="RVCommentDto">
+  		DELETE FROM RVCOMMENT WHERE RVCOMMENT_ID=#{rvcomment_id}
+  	</delete>
+  	
+   	<!-- 답글 작성 -->
+<!--   	<update id="insertReplay" parameterType="RVCommentDto"> -->
+<!--   		UPDATE QACOMMENT SET QAGROUPSQ=QAGROUPSQ + 1 -->
+<!--   		WHERE SQGROUPNO = (SELECT SQGROUPNO FROM QACOMMENT WHERE QACOMMENT_ID=#{qacomment_id}) AND -->
+<!--   		QAGROUPSQ > (SELECT QAGROUPSQ FROM QACOMMENT WHERE QACOMMENT_ID={qacomment_id} -->
+<!--   		) -->
+<!--   	</update> -->
+  	
+  </mapper>

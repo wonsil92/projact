@@ -167,7 +167,67 @@ public int admin_rvwrite(RVdocumentDto dto) {
  }
  return res;
 }
-
+//추천 수 증가
+	public int updateRecommend (RVdocumentDto document) throws Exception {
+		SqlSession session = null;
+		int result = 0;
+		try {
+			session = getSqlSessionFactory().openSession(true);
+			result = session.update(namespace + "updateRecommend", document);
+			if(result == 0) {
+				throw new NullPointerException();
+			}
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			throw new Exception("추천수 갱신에 실패했습니다.");
+		} 
+		return result;
+	}
+	
+	
+	//이전글 조회
+	public RVdocumentDto selectPrev(RVdocumentDto document) throws Exception {
+		SqlSession session = null;
+		RVdocumentDto result = null;
+		System.out.println("dao test1");
+			
+		try {
+			System.out.println("dao test2");
+			session = getSqlSessionFactory().openSession(true);
+			result = session.selectOne(namespace + "selectPrev", document);
+			System.out.println("result >> " + result);
+			System.out.println("dao test3");
+		} catch (NullPointerException e) {
+			throw new Exception("이전글이 없습니다.");
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception("이전글 조회에 실패했습니다.");
+		}
+		return result;
+	}
+					
+		//다음글 조회
+		public RVdocumentDto selectNext(RVdocumentDto document) throws Exception {
+			SqlSession session = null;
+			RVdocumentDto result = null;
+			System.out.println("dao test4");
+			
+			try {
+				System.out.println("dao test5");
+				session = getSqlSessionFactory().openSession(true);
+				result = session.selectOne(namespace + "selectNext", document);
+				System.out.println("result >> " + result);
+				System.out.println("dao test");
+			} catch (NullPointerException e) {
+				throw new Exception("다음글이 없습니다.");
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new Exception("다음글 조회에 실패했습니다.");
+			}
+						
+			return result;
+		}
 
 //글보기
 public RVdocumentDto admin_rvview(int rv_id) {

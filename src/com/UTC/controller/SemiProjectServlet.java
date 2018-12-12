@@ -438,7 +438,32 @@ public class SemiProjectServlet extends HttpServlet {
 				alert("파일을 첨부해주세요!", "review_write.jsp", request, response);
 			}
 		}
+		// 이용후기 선택 글 보기
+				else if (command.equals("RVselectOne")) {
+					int rv_id = Integer.parseInt(request.getParameter("rv_id"));
+					RVdocumentDto dto = reviewdao.RVselectOne(rv_id);
+					System.out.println("rv_id >> " + rv_id);
+					
+					//이전글 저장될 객체
+					RVdocumentDto prevDocument = null;
+					//다음글 저장될 객체
+					RVdocumentDto nextDocument = null;
+					try {
+						prevDocument = reviewdao.selectPrev(dto);
+						nextDocument = reviewdao.selectNext(dto);
+					} catch (Exception e) {
+						System.out.println("이전글 또는 다음글 조회에 실패했습니다.");
+					} 
 
+					request.setAttribute("RVviewDto", dto);
+					request.setAttribute("prevDocument", prevDocument);
+					//System.out.println("prevDocument >> " + prevDocument.getRv_title());
+					request.setAttribute("nextDocument", nextDocument);
+					//System.out.println("nextDocument >> " + nextDocument.getRv_title());
+
+					dispatch("review_view.jsp", request, response);
+					
+				}
 		// 이용후기 조회수증가
 		else if (command.equals("RVupdateViewCount")) {
 			int rv_id = Integer.parseInt(request.getParameter("rv_id"));
