@@ -51,6 +51,10 @@ VALUES(RVSEQ.NEXTVAL,'9st','<!DOCTYPE html><html><head><title></title><link rel=
 INSERT INTO RVDOCUMENT
 VALUES(RVSEQ.NEXTVAL,'10st','<!DOCTYPE html><html><head><title></title><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"><script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9a972ca802724bd143ea303f6a433713"></script><script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script></head><body><div id="map" style="width:500px;height:400px;"></div><script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=9a972ca802724bd143ea303f6a433713"></script><script>var container = document.getElementById("map");var options = {center: new daum.maps.LatLng(33.450701, 126.570667),level: 3};var map = new daum.maps.Map(container, options);</script><div class="form-check"><input type="checkbox" name="" value="Value">Option<input type="checkbox" name="" value="Value">Option<input type="checkbox" name="" value="Value">Option</div></body><html>',0,0,0,1,'글내용입니다',SYSDATE);
 
+
+INSERT INTO RVDOCUMENT
+VALUES(RVSEQ.NEXTVAL,'11st','ㅇㅇㅇㅇ',0,0,0,1,'글내용입니다',SYSDATE);
+
 COMMIT;
 
 select * from rvdocument;

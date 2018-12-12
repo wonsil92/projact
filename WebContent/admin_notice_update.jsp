@@ -13,12 +13,15 @@
 
 <title>게시글 수정</title>
 
-<!-- 로그인정보가 있으면 usertopbar 없으면 topbar를 띄움 -->
 <c:if test="${dto eq null }">
-	<%@include file="inc/usertopbar.jsp"%>
+	<%@include file="inc/topbar.jsp" %>
 </c:if>
-<c:if test="${dto != null }">
-	<%@ include file="inc/usertopbar.jsp"%>
+<c:if test="${Memberdto.getMember_role() eq ADMIN }">
+	<%@ include file="inc/admintopbar.jsp" %>
+</c:if>
+
+<c:if test="${Memberdto.getMember_role() eq USER }">
+	<%@ include file="inc/usertopbar.jsp" %>
 </c:if>
 
 <!-- SmartEditor를 사용하기 위해서 다음 js파일을 추가 (경로 확인) -->
@@ -77,33 +80,32 @@
 
 	<div class="container">
 		<form id="frm" action="SemiProjectServlet.do" method="post">
-			<input type="hidden" name="command" value="admin_rvupdate" /> <input
-				type="hidden" name="rv_id" value="${dto.rv_id }" />
+			<input type="hidden" name="command" value="admin_ntupdate" /> <input
+				type="hidden" name="nt_id" value="${dto.nt_id }" />
 			<div class="Review_header">
 
-				<h4>이용후기</h4>
-				<p>여러분들의 소중한 후기를 남겨주세요.</p>
+				<h4>공지사항</h4>
 			</div>
 			<hr>
 
 			<div class="subject_form">
 				<div class="subject">제목</div>
 				<div class="form-group">
-					<input type="text" name="title" value="${dto.rv_title }" />
+					<input type="text" name="title" value="${dto.nt_title }" />
 				</div>
 			</div>
 			<div class="content_form">
 				<div class="content">
 					내용
 					<textarea rows="15" cols="120" id="ir1" name="content">
-        			 ${dto.rv_content }
+        			 ${dto.nt_content }
         			</textarea>
 				</div>
 			</div>
 			<div class="buttons">
 				<button type="submit" id="save" class="btn btn-primary">수정하기</button>
 				<button type="button" class="btn btn-default"
-					onclick="location.href='SemiProjectServlet.do?command=admin_rvview&rv_id=${dto.rv_id}'">취소</button>
+					onclick="location.href='SemiProjectServlet.do?command=admin_NTselectOne&nt_id=${dto.nt_id}'">취소</button>
 			</div>
 		</form>
 

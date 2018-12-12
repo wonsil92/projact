@@ -77,7 +77,7 @@ List<RVdocumentDto> list = dao.selectTen();
 		<a href="make_up_self.jsp"><strong style="color:dark;">나만의 화면 만들기</strong></a>
   		<a href="SemiProjectServlet.do?command=admin_rvlist"><strong style="color:dark;">이용후기 관리</strong></a>
   		<a href="SemiProjectServlet.do?command=admin_qalist"><strong style="color:dark;">Q&nbsp;&amp;&nbsp;A Board 관리</strong></a>
-  		<a href="SemiProjectServlet.do?command=ntlist"><strong style="color:dark;">공지사항</strong></a>
+  		<a href="SemiProjectServlet.do?command=admin_ntlist"><strong style="color:dark;">공지사항</strong></a>
 		<a href="SemiProjectServlet.do?command=admin_userlist"><strong style="color:dark;">회원 정보 조회</strong></a>
 		<div class="nav-underline"></div>
 	</nav>

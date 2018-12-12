@@ -99,44 +99,88 @@
 					<jsp:getProperty property="nt_content" name="NTviewDto" />
 				</div>
 			</div>
-			<hr>
-			<div class="comment_form">
-				<div class="comment_writer_form">
-					<div class="comment_writer">박우주</div>
-					<div class="date">2018-11-21</div>
-					<div class="apply">
-						<a href="#"> <img src="img/arrow.png">답글
-						</a>
-					</div>
-				</div>
+<%
+    if(dto != null && dto.getMember_email().equals(NTviewDto.getMember_email())){
+ %> 
+       <div class="button_container" style="float: right;"> 
+          <div class="update_button"> 
+             <a class="upde" href="SemiProjectServlet.do?command=ntupdateform&nt_id=${NTviewDto.nt_id }"><button type="submit" class="btn btn-success" style="text-align:right;">수정</button></a> 
+          </div> 
+          <div class="delete_button"> 
+             <a class="upde" href="SemiProjectServlet.do?command=ntdelete&nt_id=${NTviewDto.nt_id }"><button type="submit" class="btn btn-danger" style="text-align:right;">삭제</button></a> 
+          </div> 
+       </div> 
+<%
+    }else{
+      
+    }
+%>
+   </div>
 
-				<div class="comment_content">어쩌고저쩌고어쩌고저쩌고어쩌고저쩌고어쩌고저쩌고</div>
-				<hr>
-			</div>
+</div>
+ 
+<!-- -----------------------댓글등록부분 ---------------------- -->
+<%-- <div class="comment_container">
+   <form id="comment_form" method="post" action="CommentInsert.do" onsubmit="return comment_ajax(this);">
+      <input type="hidden" name="command" value="insertRVComment"/>
+      <input type="hidden" name="rv_id" value="${RVviewDto.rv_id }" />
+      <div class="comment_form" >
 
-			<div class="comment_content">
-				<textarea rows="3" cols="120"></textarea>
-				<div class="insert_button">
-					<button type="submit" class="btn btn-default">등록</button>
-				</div>
-				<hr>
-			</div>
-			<div style="text-align: right;">
-				<button type="button" class="btn btn-primary"
-					onclick="location.href='SemiProjectServlet.do?command=ntlist'">목록으로</button>
-			</div>
-			<br>
-			<br>
+       <div id="comment_list" >          
 
-			<div class="prev_next">
-				<div class="prev">이전글</div>
-				<div class="next">다음글</div>
-			</div>
+       </div>
+       <hr>
+      </div>
+      <div class="comment_content">
+         <textarea rows="3" cols="120" name="rvcomment_content"></textarea>
+         <div class="insert_button">
+            <button type="submit" class="btn btn-default">등록</button>
+         </div>
+      </div>
+   </form>
+</div>
+ --%>
+   <div style="text-align: right;">
+      <button type="button" class="btn btn-primary" onclick="location.href='SemiProjectServlet.do?command=ntlist'">목록으로</button>
+   </div>
+   <br>
+   <br>
+   
+   
+   <!-- --------------------이전글,다음글----------------- -->
+  <%--  <div class="prev_next">
+      <div class="prev">
+         <b>이전글</b>
+         <c:choose>
+            <c:when test="${prevDocument != null }">
+               <c:url var="prevUrl" value="SemiProjectServlet.do?command=rvdetail">
+                  <c:param name="rv_id" value="${prevDocument.rv_id }" />
+               </c:url>
+               <a href="${prevUrl }">${prevDocument.rv_title }</a>
+            </c:when>
+            <c:otherwise>
+               이전글이 없습니다.
+            </c:otherwise>
+         </c:choose>
+      </div>
+      <div class="next">
+         <b>다음글</b>
+         <c:choose>
+            <c:when test="${nextDocument != null }">
+               <c:url var="nextUrl" value="SemiProjectServlet.do?command=rvdetail">
+                  <c:param name="rv_id" value="${nextDocument.rv_id }" />
+               </c:url>
+               <a href="${nextUrl }">${nextDocument.rv_title }</a>
+            </c:when>
+            <c:otherwise>
+               다음글이 없습니다.
+            </c:otherwise>
+         </c:choose>
+      </div>
+   </div>
+             --%>
+</div>
 
-		</div>
-		</div>
-</body>
-
-<%@ include file="inc/footer.jsp"%>
+<%@ include file="inc/footer.jsp" %>
 
 </html>

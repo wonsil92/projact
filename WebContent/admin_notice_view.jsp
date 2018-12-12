@@ -11,9 +11,20 @@
 %>
 <!-- C태그 사용 -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<!-- 비회원일때 = topbar.jsp / 회원일 때 usertopbar.jsp / 관리자일 떄 admintopbar.jsp-->
+<c:if test="${dto eq null }">
+	<%@include file="inc/topbar.jsp" %>
+</c:if>
 
-<%@ include file="inc/admintopbar.jsp"%>
+<c:if test="${dto.getMember_role() eq 'ADMIN' }">
+	<%@ include file="inc/admintopbar.jsp" %>
+	
+</c:if>
+
+<c:if test="${dto.getMember_role() eq 'USER' }">
+	<%@ include file="inc/usertopbar.jsp" %>
+</c:if>
 
 <!DOCTYPE html>
 <html>
@@ -32,18 +43,16 @@
 	href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i"
 	rel="stylesheet">
 <link href="css/one-page-wonder.min.css" rel="stylesheet">
-
 </head>
 <body>
 	<!-- RVviewDto를 사용할 수 있게 세팅해줌 -->
-	<jsp:useBean id="RVviewDto" class="com.UTC.dto.RVdocumentDto"
+	<jsp:useBean id="NTviewDto" class="com.UTC.dto.NoticeDto"
 		scope="request">
 	</jsp:useBean>
 
 	<div class="container">
 		<div class="Review_header">
-			<h4>이용후기</h4>
-			<p>여러분들의 소중한 후기를 남겨주세요.</p>
+			<h4>공지사항</h4>
 		</div>
 		<hr>
 		<hr>
@@ -51,53 +60,41 @@
 		<div class="subject_form">
 			<div class="subject">제목</div>
 			<div class="form-group">
-				<jsp:getProperty property="rv_title" name="RVviewDto" />
+				<jsp:getProperty property="nt_title" name="NTviewDto" />
 			</div>
-		</div>
-		<div class="writer_form">
-			<div class="write">글쓴이</div>
-			<div class="writer">
-				<jsp:getProperty property="member_name" name="RVviewDto" />
-			</div>
-			<div class="hit">
-				조회수 : &nbsp;&nbsp;<jsp:getProperty property="rv_view_cnt"
-					name="RVviewDto" />
-			</div>
-			<div class="hit">
-				추천수 : &nbsp;&nbsp;<jsp:getProperty property="rv_reco_cnt"
-					name="RVviewDto" />
-			</div>
-			<div class="date_form">
-				작성일 :&nbsp;&nbsp;
-				<fmt:formatDate value="${RVviewDto.rv_regdate }"
-					pattern="yyyy.MM.dd" />
-			</div>
-		</div>
 
-		<br> <br>
-		<!-- 파일이 들어가는 부분 -->
-		<div class="content_form">
-			<div class="content">
-				<jsp:getProperty property="file_id" name="RVviewDto" />
+			<div class="writer_form">
+				<div class="write">글쓴이</div>
+				<div class="writer">
+					<jsp:getProperty property="member_name" name="NTviewDto" />
+				</div>
+				<div class="hit">
+					조회수 : &nbsp;&nbsp;<jsp:getProperty property="nt_view_cnt"
+						name="NTviewDto" />
+				</div>
+				<div class="date_form">
+					작성일 :&nbsp;&nbsp;<fmt:formatDate value="${NTviewDto.nt_regdate }" pattern="yyyy.MM.dd" />
+				</div>
 			</div>
-		</div>
 
-		<!-- 글 내용이 들어가는 부분 -->
-		<div class="content_form">
-			<div class="content">
-				<jsp:getProperty property="rv_content" name="RVviewDto" />
-				
-				
-
+			<br>
+			<br>
+			<!-- 글 내용이 들어가는 부분 -->
+			<div class="content_form">
+				<div class="content">
+					<jsp:getProperty property="nt_content" name="NTviewDto" />
+				</div>
+			</div>
+			<hr>
 <%
-    if(dto != null && dto.getMember_email().equals(RVviewDto.getMember_email())){
+    if(dto != null && dto.getMember_email().equals(NTviewDto.getMember_email())){
  %> 
        <div class="button_container" style="float: right;"> 
           <div class="update_button"> 
-             <a class="upde" href="SemiProjectServlet.do?command=admin_rvupdateform&rv_id=${RVviewDto.rv_id }"><button type="submit" class="btn btn-success" style="text-align:right;">수정</button></a> 
+             <a class="upde" href="SemiProjectServlet.do?command=admin_ntupdateform&nt_id=${NTviewDto.nt_id }"><button type="submit" class="btn btn-success" style="text-align:right;">수정</button></a> 
           </div> 
           <div class="delete_button"> 
-             <a class="upde" href="SemiProjectServlet.do?command=admin_rvdelete&rv_id=${RVviewDto.rv_id }"><button type="submit" class="btn btn-danger" style="text-align:right;">삭제</button></a> 
+             <a class="upde" href="SemiProjectServlet.do?command=admin_ntdelete&nt_id=${NTviewDto.nt_id }"><button type="submit" class="btn btn-danger" style="text-align:right;">삭제</button></a> 
           </div> 
        </div> 
 <%
@@ -108,8 +105,30 @@
    </div>
 
 </div>
+ 
+<!-- -----------------------댓글등록부분 ---------------------- -->
+<%-- <div class="comment_container">
+   <form id="comment_form" method="post" action="CommentInsert.do" onsubmit="return comment_ajax(this);">
+      <input type="hidden" name="command" value="insertRVComment"/>
+      <input type="hidden" name="rv_id" value="${RVviewDto.rv_id }" />
+      <div class="comment_form" >
+
+       <div id="comment_list" >          
+
+       </div>
+       <hr>
+      </div>
+      <div class="comment_content">
+         <textarea rows="3" cols="120" name="rvcomment_content"></textarea>
+         <div class="insert_button">
+            <button type="submit" class="btn btn-default">등록</button>
+         </div>
+      </div>
+   </form>
+</div>
+ --%>
    <div style="text-align: right;">
-      <button type="button" class="btn btn-primary" onclick="location.href='SemiProjectServlet.do?command=admin_rvlist'">목록으로</button>
+      <button type="button" class="btn btn-primary" onclick="location.href='SemiProjectServlet.do?command=admin_ntlist'">목록으로</button>
    </div>
    <br>
    <br>
@@ -151,5 +170,4 @@
 
 <%@ include file="inc/footer.jsp" %>
 
-</body>
 </html>

@@ -170,24 +170,23 @@ public class SemiProjectServlet extends HttpServlet {
 			dispatch("adminContent.jsp", request, response);
 		}
 
-		//==================페이지이동할부분=================
-				//make페이지로 이동
-				else if(command.equals("make_up_self")) {
-				System.out.println("make로 이동");
-				response.sendRedirect("make_up_self.jsp");
-				}
+		// ==================페이지이동할부분=================
+		// make페이지로 이동
+		else if (command.equals("make_up_self")) {
+			System.out.println("make로 이동");
+			response.sendRedirect("make_up_self.jsp");
+		}
 
-				// 유저 마이페이지로 이동
-				else if (command.equals("my_page")) {
-					System.out.println("마이페이지로 이동");
-					response.sendRedirect("my_page.jsp");
-				}
+		// 유저 마이페이지로 이동
+		else if (command.equals("my_page")) {
+			System.out.println("마이페이지로 이동");
+			response.sendRedirect("my_page.jsp");
+		}
 
-				// 메인으로 이동
-				else if (command.equals("index")) {
-					System.out.println("메인으로 이동");
-					response.sendRedirect("index.jsp");
-
+		// 메인으로 이동
+		else if (command.equals("index")) {
+			System.out.println("메인으로 이동");
+			response.sendRedirect("index.jsp");
 
 			// =========Q&A게시판 리스트===========
 		} else if (command.equals("qalist")) {
@@ -205,15 +204,15 @@ public class SemiProjectServlet extends HttpServlet {
 			// ========게시글 상세보기==========
 		}
 
-		//로그인 걸러주는 마이페이지
-		else if(command.equals("mypage")) {
-			if(session.getAttribute("dto")==null) {
-				alert("먼저 로그인 해주세요.","index.jsp", request, response);
-			}else {
+		// 로그인 걸러주는 마이페이지
+		else if (command.equals("mypage")) {
+			if (session.getAttribute("dto") == null) {
+				alert("먼저 로그인 해주세요.", "index.jsp", request, response);
+			} else {
 				dispatch("my_page.jsp", request, response);
 			}
 		}
-		
+
 		else if (command.equals("QAupdateViewCount")) {
 			int qa_id = Integer.parseInt(request.getParameter("qa_id"));
 			int dto = QADao.QAupdateViewCount(qa_id);
@@ -255,7 +254,7 @@ public class SemiProjectServlet extends HttpServlet {
 			if (res > 0) {
 				alert("글 쓰기 성공!", "SemiProjectServlet.do?command=qalist", request, response);
 			} else {
-				alert("글 쓰기 실패!", "qa_write.jsp", request, response);
+				alert("제목,글 내용을 전부 입력하세요!", "qa_write.jsp", request, response);
 			}
 		}
 
@@ -308,101 +307,98 @@ public class SemiProjectServlet extends HttpServlet {
 			// 그 회원번호에 해당하는 글 목록을 QAlistUser라고 담자
 			List<QABoardDto> QAlistUser = QADao.selectUserQa(member_id);
 			request.setAttribute("QAlistUser", QAlistUser);
-			
-			//rv글목록
+
+			// rv글목록
 			List<RVdocumentDto> RVlistUser = reviewdao.selectUserRv(member_id);
 			request.setAttribute("RVlistUser", RVlistUser);
 
-			//현재 마이페이지에서 보이는 최근작업물목록(여기에 쿠키들어가면됩니다)
+			// 현재 마이페이지에서 보이는 최근작업물목록(여기에 쿠키들어가면됩니다)
 			List<MakeBoardDto> MakelistUser = MakeDao.selectUserMake(member_id);
 			request.setAttribute("MakelistUser", MakelistUser);
 
-
 			dispatch("mine.jsp", request, response);
 		}
-		
-		//=========마페 qa삭제... 디스패치가 이상하게 돼서 걍 새로 붙임=======
+
+		// =========마페 qa삭제... 디스패치가 이상하게 돼서 걍 새로 붙임=======
 		else if (command.equals("myqadelete")) {
-		int qa_id = Integer.parseInt(request.getParameter("qa_id"));
+			int qa_id = Integer.parseInt(request.getParameter("qa_id"));
 
-		int res = QADao.qaDelete(qa_id);
+			int res = QADao.qaDelete(qa_id);
 
-		if (res > 0) {
-			alert("게시글이 삭제되었습니다", "SemiProjectServlet.do?command=my_page", request, response);
-		} else {
-			alert("삭제 실패", "SemiProjectServlet.do?command=my_page", request, response);
-				}
+			if (res > 0) {
+				alert("게시글이 삭제되었습니다", "SemiProjectServlet.do?command=my_page", request, response);
+			} else {
+				alert("삭제 실패", "SemiProjectServlet.do?command=my_page", request, response);
 			}
-
-			//==============페이지만들기========================
-	else if (command.equals("makewrite")) {
-		String title = request.getParameter("title");
-		String content = request.getParameter("content");
-		int member_id = 0; // 회원번호를 받을 변수 선언
-
-		System.out.println(title);
-		System.out.println(content);
-
-		// 로그인 값 가져오기
-		MemberDto logindto = (MemberDto) session.getAttribute("dto");
-		member_id = logindto.getMember_id();
-
-		MakeBoardDto dto = new MakeBoardDto(title, content, member_id);
-
-		int res = MakeDao.makeWrite(dto);
-
-		// 실행결과확인
-		System.out.println(res);
-		if (res > 0) {
-			alert("저장 성공!", "SemiProjectServlet.do?command=make_up_self", request, response);
-		} else {
-			alert("저장 실패!", "make_up_self.jsp", request, response);
 		}
-	}
 
-	//=================페이지만든거 보기===================
-	else if(command.equals("makedetail")) {
-		int make_id = Integer.parseInt(request.getParameter("make_id"));
+		// ==============페이지만들기========================
+		else if (command.equals("makewrite")) {
+			String title = request.getParameter("title");
+			String content = request.getParameter("content");
+			int member_id = 0; // 회원번호를 받을 변수 선언
 
-		/*
-		 * 게시글의 정보를 객체에 담고 request객체에 정보를 담고 게시글의 정보를 가지고 makeself 페이지로 이동
-		 */
-		MakeBoardDto makeViewDto = MakeDao.makeView(make_id);
-		request.setAttribute("makeViewDto", makeViewDto);
+			System.out.println(title);
+			System.out.println(content);
 
-		dispatch("make_up_self.jsp", request, response);
+			// 로그인 값 가져오기
+			MemberDto logindto = (MemberDto) session.getAttribute("dto");
+			member_id = logindto.getMember_id();
 
-	}
+			MakeBoardDto dto = new MakeBoardDto(title, content, member_id);
 
-	//=====내만페 이미지보이는게시글
-	else if(command.equals("iMadeUser")) {
-		MemberDto logindto = (MemberDto) session.getAttribute("dto");
-		int member_id = logindto.getMember_id();
-		System.out.println("where 뒤에 들어갈 회원번호: "+member_id);
-		List<MakeBoardDto> MakelistUser = MakeDao.selectUserMake(member_id);
-		request.setAttribute("MakelistUser", MakelistUser);
-		//내만페로 보내기
-		dispatch("my_locker.jsp", request, response);
+			int res = MakeDao.makeWrite(dto);
 
-	}
-
-	//=====페이지삭제=========
-	else if (command.equals("makedelete")) {
-		int make_id = Integer.parseInt(request.getParameter("make_id"));
-
-		
-		int res = MakeDao.makeDelete(make_id);
-
-		if (res > 0) {
-			// response.sendRedirect("SemiProjectServlet.do?command=qalist");
-			//response.sendRedirect(request.getContextPath());
-			alert("삭제되었습니다", "SemiProjectServlet.do?command=my_page", request, response);
-			//여기서 내만페로 돌아가야 하는데 방법을 모르겠네요...ㅜㅜㅜ 해당 메뉴 클릭된 상태로 돌아가야합니다
-		} else {
-			dispatch("SemiProjectServlet.do?command=my_page", request, response);
+			// 실행결과확인
+			System.out.println(res);
+			if (res > 0) {
+				alert("저장 성공!", "SemiProjectServlet.do?command=make_up_self", request, response);
+			} else {
+				alert("저장 실패!", "make_up_self.jsp", request, response);
+			}
 		}
-	}
-		
+
+		// =================페이지만든거 보기===================
+		else if (command.equals("makedetail")) {
+			int make_id = Integer.parseInt(request.getParameter("make_id"));
+
+			/*
+			 * 게시글의 정보를 객체에 담고 request객체에 정보를 담고 게시글의 정보를 가지고 makeself 페이지로 이동
+			 */
+			MakeBoardDto makeViewDto = MakeDao.makeView(make_id);
+			request.setAttribute("makeViewDto", makeViewDto);
+
+			dispatch("make_up_self.jsp", request, response);
+
+		}
+
+		// =====내만페 이미지보이는게시글
+		else if (command.equals("iMadeUser")) {
+			MemberDto logindto = (MemberDto) session.getAttribute("dto");
+			int member_id = logindto.getMember_id();
+			System.out.println("where 뒤에 들어갈 회원번호: " + member_id);
+			List<MakeBoardDto> MakelistUser = MakeDao.selectUserMake(member_id);
+			request.setAttribute("MakelistUser", MakelistUser);
+			// 내만페로 보내기
+			dispatch("my_locker.jsp", request, response);
+
+		}
+
+		// =====페이지삭제=========
+		else if (command.equals("makedelete")) {
+			int make_id = Integer.parseInt(request.getParameter("make_id"));
+
+			int res = MakeDao.makeDelete(make_id);
+
+			if (res > 0) {
+				// response.sendRedirect("SemiProjectServlet.do?command=qalist");
+				// response.sendRedirect(request.getContextPath());
+				alert("삭제되었습니다", "SemiProjectServlet.do?command=my_page", request, response);
+				// 여기서 내만페로 돌아가야 하는데 방법을 모르겠네요...ㅜㅜㅜ 해당 메뉴 클릭된 상태로 돌아가야합니다
+			} else {
+				dispatch("SemiProjectServlet.do?command=my_page", request, response);
+			}
+		}
 
 		// =============이용후기===========
 		// 게시글 전체출력
@@ -648,9 +644,9 @@ public class SemiProjectServlet extends HttpServlet {
 
 			request.setAttribute("QAList", QAList);
 			dispatch("admin_qa_list.jsp", request, response);
-		
-		} 
-		//관리자 QA조회수증가
+
+		}
+		// 관리자 QA조회수증가
 		else if (command.equals("ADQAupdateViewCount")) {
 			int qa_id = Integer.parseInt(request.getParameter("qa_id"));
 			int dto = QADao.QAupdateViewCount(qa_id);
@@ -705,7 +701,7 @@ public class SemiProjectServlet extends HttpServlet {
 
 			request.setAttribute("dto", dto);
 			dispatch("admin_qa_update.jsp", request, response);
-			
+
 		} else if (command.equals("admin_qaupdate")) {
 			int qa_id = Integer.parseInt(request.getParameter("qa_id"));
 			String qa_title = request.getParameter("title");
@@ -722,7 +718,7 @@ public class SemiProjectServlet extends HttpServlet {
 				dispatch("SemiProjectServlet.do?command=admin_qaupdateform&qa_id=" + qa_id, request, response);
 			}
 
-		// 관리자 QA 게시글 삭제
+			// 관리자 QA 게시글 삭제
 		} else if (command.equals("admin_qadelete")) {
 			int qa_id = Integer.parseInt(request.getParameter("qa_id"));
 
@@ -734,8 +730,8 @@ public class SemiProjectServlet extends HttpServlet {
 			} else {
 				dispatch("SemiProjectServlet.do?command=admin_qaview&qa_id=" + qa_id, request, response);
 			}
-			
-		// 관리자 다중 QA게시글 삭제
+
+			// 관리자 다중 QA게시글 삭제
 		} else if (command.equals("admin_multi_qadelete")) {
 
 			String[] qa_id = request.getParameterValues("chk");
@@ -794,7 +790,7 @@ public class SemiProjectServlet extends HttpServlet {
 				alert("글 쓰기 실패!", "admin_review_write.jsp", request, response);
 			}
 		}
-		
+
 		// 관리자 이용후기 글수정
 		else if (command.equals("admin_rvupdateform")) {
 			int rv_id = Integer.parseInt(request.getParameter("rv_id"));
@@ -803,7 +799,7 @@ public class SemiProjectServlet extends HttpServlet {
 
 			request.setAttribute("dto", dto);
 			dispatch("admin_review_update.jsp", request, response);
-			
+
 		} else if (command.equals("admin_rvupdate")) {
 			int rv_id = Integer.parseInt(request.getParameter("rv_id"));
 			String rv_title = request.getParameter("title");
@@ -869,81 +865,182 @@ public class SemiProjectServlet extends HttpServlet {
 			request.setAttribute("RVviewDto", Dto);
 
 			dispatch("admin_review_view.jsp", request, response);
-		
-		//이메일 인증
-	}else if(command.equals("emailcheck")) {
-		//사용자 이메일과 인증번호를 받아오고
-		String member_email = request.getParameter("member_email");
-		String authNum ="";
-		
-		System.out.println(member_email);
-		
-		authNum = RandomNum();
-		
-		sendEmail(member_email.toString(),authNum);
-		
-		request.setAttribute("authNum", authNum);
-		dispatch("email_check.jsp",request,response);
-	}
-	}
-	//sendEmail메소드
-			private void sendEmail(String member_email, String authNum) {
-				String host = "smtp.gmail.com"; //smtp서버
-				String subject = "이메일 인증 번호입니다!";
-				String fromName = "UTC 관리자";
-				String from="uiyhp123@gmail.com"; //메일 보내는 사람
-				String to = member_email; //메일 받는 사람
-				
-				String content = "인증번호["+authNum+"]";
-				
-				try {
-					Properties p = new Properties();
-					//G-Mail SMTP 사용시
-					p.put("mail.smtp.starttls.enable", "true");
-					p.put("mail.transport.protocol", "smtp");
-					p.put("mail.smtp.host", host);
-					p.setProperty("mail.smtp.socketFactory.class",
-							"javax.net.ssl.SSLSocketFactory");
-					p.put("mail.smtp.port", "465");
-					p.put("mail.smtp.user", from);
-					p.put("mail.smtp.auth", "true");
-					
-					Session mailSession = Session.getInstance(p,
-							new javax.mail.Authenticator() {
-							protected PasswordAuthentication getPasswordAuthentication() {
-								return new PasswordAuthentication("uiyhp123@gmail.com", "ehdals5213!");
-								
-							}
-					});
-				Message msg = new MimeMessage(mailSession);
-				msg.setFrom(new InternetAddress(from, MimeUtility.encodeText(
-						fromName,"UTF-8","B")));
-				
-				InternetAddress[] address1 = {new InternetAddress(to)};
-				msg.setRecipients(Message.RecipientType.TO, address1); //받는 사람 설정1
-				msg.setSubject(subject); //제목설정
-				msg.setSentDate(new java.util.Date());//보내는 날짜 설정
-				msg.setContent(content,"text/html; charset=euc-kr");
-				
-				Transport.send(msg);
-				}catch(MessagingException e) {
-					e.printStackTrace();
-				}catch(Exception e) {
-					e.printStackTrace();
-				}
-			}
-			
-			//인증번호 난수를 생성하는 메소드
-			//인증번호 생성 메소드
-			public String RandomNum() {
-				StringBuffer buffer = new StringBuffer();
-				for(int i=0; i<=6; i++) {
-					int n = (int)(Math.random() * 10);
-					buffer.append(n);
-				}
-				return buffer.toString();
-			}
+
+			// 이메일 인증
+		}
+
+		// =============관리자관리자관리자관리자공지사항===========
+		// 관리자공 지사항 게시글 전체출력
+		else if (command.equals("admin_ntlist")) {
+			// 게시글들의 내용을 담기위해 list에 값을 담아주고
+			List<NoticeDto> ntlist = noticedao.selectAll();
+
+			session.getAttribute("dto");
+
+			request.setAttribute("ntlist", ntlist);
+			// 게시글들의 내용을 request객체에 담고 review_list로 게시판 정보를 가지고 이동
+			dispatch("admin_notice_list.jsp", request, response); // forward 하나하나쓰기귀찮아서 메소드로만듦
+		}
+
 	
+		//관지라 공지사항 조회수증가
+		else if (command.equals("admim_NTupdateViewCount")) {
+			int nt_id = Integer.parseInt(request.getParameter("nt_id"));
+			int dto = noticedao.NTupdateViewCount(nt_id);
+			request.setAttribute("NTviewDto", dto);
+
+			if (dto > 0) {
+//	             alert("조회수 증가!", "SemiProjectServlet.do?command=NTselectOne&nt_id="+nt_id, request, response);
+				dispatch("SemiProjectServlet.do?command=admin_NTselectOne&nt_id=" + nt_id, request, response);
+			} else {
+				alert("조회수 증가 실패!", "admin_notice_write.jsp", request, response);
+			}
+		}
+		//관리자 공지사항 선택 글 보기
+		else if (command.equals("admin_NTselectOne")) {
+			int nt_id = Integer.parseInt(request.getParameter("nt_id"));
+			NoticeDto dto = noticedao.NTselectOne(nt_id);
+			request.setAttribute("NTviewDto", dto);
+
+			dispatch("admin_notice_view.jsp", request, response);
+		}
+		
+		//관리자 공지사항 게시판글작성
+		else if (command.equals("admin_noticeinsertform")) {
+			response.sendRedirect("admin_notice_write.jsp");
+
+		} else if (command.equals("admin_noticeinsert")) {
+
+			String nt_title = request.getParameter("title");
+			String nt_content = request.getParameter("content");
+			int member_id = 0;
+
+			System.out.println(nt_title);
+			System.out.println(nt_content);
+
+			// member_id값 가져오기
+			MemberDto logindto = (MemberDto) session.getAttribute("dto");
+			member_id = logindto.getMember_id();
+
+			NoticeDto dto = new NoticeDto(nt_title, nt_content, member_id);
+			int res = noticedao.noticeinsert(dto);
+
+			System.out.println(res);
+			if (res > 0) {
+				alert("글 쓰기 성공!", "SemiProjectServlet.do?command=admin_ntlist", request, response);
+			} else {
+				alert("글 쓰기 실패!", "admin_notice_write.jsp", request, response);
+			}
+		}
+
+		//관리자 공지사항 글수정
+		else if (command.equals("admin_ntupdateform")) {
+			int nt_id = Integer.parseInt(request.getParameter("nt_id"));
+
+			NoticeDto dto = noticedao.NTselectOne(nt_id);
+
+			request.setAttribute("dto", dto);
+			dispatch("admin_notice_update.jsp", request, response);
+		} else if (command.equals("admin_ntupdate")) {
+			int nt_id = Integer.parseInt(request.getParameter("nt_id"));
+			String nt_title = request.getParameter("title");
+			String nt_content = request.getParameter("content");
+
+			NoticeDto dto = new NoticeDto(nt_id, nt_title, nt_content);
+
+			int res = noticedao.NTupdate(dto);
+
+			if (res > 0) {
+				// response.sendRedirect("SemiProjectServlet.do?command=qadetail&qa_id="+qa_id);
+				alert("게시글이 수정되었습니다!", "SemiProjectServlet.do?command=admin_NTselectOne&nt_id=" + nt_id, request, response);
+			} else {
+				dispatch("SemiProjectServlet.do?command=admin_ntupdateform&nt_id=" + nt_id, request, response);
+			}
+		}
+
+		//관리자 공지사항 글삭제
+		else if (command.equals("admin_ntdelete")) {
+			int nt_id = Integer.parseInt(request.getParameter("nt_id"));
+
+			int res = noticedao.NTdelete(nt_id);
+
+			if (res > 0) {
+				// response.sendRedirect("SemiProjectServlet.do?command=qalist");
+				alert("게시글이 삭제되었습니다", "SemiProjectServlet.do?command=admin_ntlist", request, response);
+			} else {
+				dispatch("SemiProjectServlet.do?command=admin_NTselectOne&nt_id=" + nt_id, request, response);
+			}
+
+		} else if (command.equals("emailcheck")) {
+			// 사용자 이메일과 인증번호를 받아오고
+			String member_email = request.getParameter("member_email");
+			String authNum = "";
+
+			System.out.println(member_email);
+
+			authNum = RandomNum();
+
+			sendEmail(member_email.toString(), authNum);
+
+			request.setAttribute("authNum", authNum);
+			dispatch("email_check.jsp", request, response);
+		}
+	}
+
+	// sendEmail메소드
+	private void sendEmail(String member_email, String authNum) {
+		String host = "smtp.gmail.com"; // smtp서버
+		String subject = "이메일 인증 번호입니다!";
+		String fromName = "UTC 관리자";
+		String from = "uiyhp123@gmail.com"; // 메일 보내는 사람
+		String to = member_email; // 메일 받는 사람
+
+		String content = "인증번호[" + authNum + "]";
+
+		try {
+			Properties p = new Properties();
+			// G-Mail SMTP 사용시
+			p.put("mail.smtp.starttls.enable", "true");
+			p.put("mail.transport.protocol", "smtp");
+			p.put("mail.smtp.host", host);
+			p.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+			p.put("mail.smtp.port", "465");
+			p.put("mail.smtp.user", from);
+			p.put("mail.smtp.auth", "true");
+
+			Session mailSession = Session.getInstance(p, new javax.mail.Authenticator() {
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication("uiyhp123@gmail.com", "ehdals5213!");
+
+				}
+			});
+			Message msg = new MimeMessage(mailSession);
+			msg.setFrom(new InternetAddress(from, MimeUtility.encodeText(fromName, "UTF-8", "B")));
+
+			InternetAddress[] address1 = { new InternetAddress(to) };
+			msg.setRecipients(Message.RecipientType.TO, address1); // 받는 사람 설정1
+			msg.setSubject(subject); // 제목설정
+			msg.setSentDate(new java.util.Date());// 보내는 날짜 설정
+			msg.setContent(content, "text/html; charset=euc-kr");
+
+			Transport.send(msg);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	// 인증번호 난수를 생성하는 메소드
+	// 인증번호 생성 메소드
+	public String RandomNum() {
+		StringBuffer buffer = new StringBuffer();
+		for (int i = 0; i <= 6; i++) {
+			int n = (int) (Math.random() * 10);
+			buffer.append(n);
+		}
+		return buffer.toString();
+	}
 
 	private void dispatch(String url, HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {

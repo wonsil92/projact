@@ -1,141 +1,175 @@
 .upde:link{
-	color:black;
+   color:black;
 }
 #updatediv{
-	text-align: right;
+   text-align: right;
 }
 
 .Review_header {
-	padding-top: 200px;
+   padding-top: 150px;
 }
 
 .Review_header p {
-	font-size: 12px;
+   font-size: 12px;
 }
 
 .subject, .form-group {
-	display: inline-block;
+   display: inline-block;
 }
 
 .subject_form {
-	width: 100%;
+   width: 100%;
 }
 
 .subject {
-	margin-left: 20px;
-	margin-right: 60px;
+   margin-left: 20px;
+   margin-right: 60px;
 }
 
 .writer_form {
-	margin-left: 20px;
+   margin-left: 20px;
 }
 
 .write, .writer {
-	display: inline-block;
-	float: left;
+   display: inline-block;
+   float: left;
 }
 
 .writer {
-	margin-left: 45px;
+   margin-left: 45px;
 }
 
 .hit, .up {
-	display: inline-block;
-	float: right;
-	margin-right: 30px;
+   display: inline-block;
+   float: right;
+   margin-right: 30px;
 }
 
 .date_form {
-	display: inline-block;
-	float: right;
-	margin-right: 30px;
+   display: inline-block;
+   float: right;
+   margin-right: 30px;
 }
 
 .content_form > img {
-	width: 600px;
-	height: 400px;
-	margin-bottom: 50px;
-	margin-top: 20px;
+   width: 600px;
+   height: 400px;
+   margin-bottom: 50px;
+   margin-top: 20px;
 }
 
 .content {
-	margin-bottom: 400px;
+   margin-bottom: 150px;
+   height: 400px;
+}
+
+.content p {
+   margin-bottom: 400px;
 }
 
 .comment_writer {
-	margin-bottom: 20px;
-	display: inline-block;
+   margin-bottom: 20px;
+   display: inline-block;
 }
 
 .date {
-	display: inline-block;
-	margin-left: 90px;
+   display: inline-block;
+   margin-left: 90px;
 }
 
 .apply {
-	display: inline-block;
-	margin-left: 20px;
+   display: inline-block;
+   margin-left: 20px;
 }
 
 .apply a {
-	text-decoration: none;
-	color: #000000;
+   text-decoration: none;
+   color: #000000;
 }
 
 .apply a:hover {
-	color: #000000;
+   color: #000000;
 }
 
 .apply > img {
-	width: 20px;
-	height: 20px;	
+   width: 20px;
+   height: 20px;   
 }
 
 .comment_form {
-	margin-bottom: 80px;
+   margin-bottom: 80px;
+   overflow:hidden; 
 }
 
+/* .comment_form:after{ */
+/*    content:""; */
+/*    display:block; */
+/*    clear:both; */
+   
+/* } */
+
 textarea, .insert_button {
-	display: inline-block;
+   display: inline-block;
 }
 
 button.btn.btn-default {
-	width: 90px;
-	height: 80px;
-	margin-bottom: 65px;
-	margin-left: 20px;
+   width: 90px;
+   height: 80px;
+   margin-bottom: 65px;
+   margin-left: 20px;
 }
 
 .comment_content {
-	margin-bottom: 30px;
+   margin-bottom: 30px;
 }
 
 .prev_next {
-	border-top: 1px solid;
-	border-bottom: 1px solid;
-	margin-bottom: 50px;
+   border-top: 1px solid;
+   border-bottom: 1px solid;
+   margin-bottom: 50px;
 }
 
 .prev {
-	border-bottom: 1px solid;
-	height: 30px;
+   border-bottom: 1px solid;
+   height: 30px;
 }
 
 .next {
-	height: 30px;
+   height: 30px;
 }
 
-.button_container {
-	display: inline-block;
+.button_container > div {
+   display: inline-block;
+   float: right;
+/*    overflow: hidden; */
 }
 
-button.btn.btn-primary { 
-	display: inline-block;
- 	float: right; 
-} 
+h5.modal-title {
+      margin-right: 40%;
+}
 
-button.btn.btn-danger {
-	display: inline-block;
-	float: right; 
-} 
+h5.modal-title2 {
+      margin-left: 40%;
+}
 
+.pull-right {
+   padding-left: 5px;
+}
+
+.prev a, .next a {
+   color: black;
+}
+
+.prev a:hover, .next a:hover {
+   color: black;
+}
+
+i.far.fa-thumbs-up {
+   float: right;
+   color: black;
+   margin-right: 25px;
+}
+
+i.far.fa-thumbs-up a {
+   color: black;
+}
