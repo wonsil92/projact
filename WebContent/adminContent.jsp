@@ -17,7 +17,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <meta charset="UTF-8">
-<title>Administrator's Page!</title>
+<title>Administrator's Page!</title> 
 
 <%@ include file="inc/admintopbar.jsp"%>
 
