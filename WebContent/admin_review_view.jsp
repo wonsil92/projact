@@ -44,8 +44,29 @@
 		<div class="Review_header">
 			<h4>이용후기</h4>
 			<p>여러분들의 소중한 후기를 남겨주세요.</p>
+			<%
+				if (dto != null && dto.getMember_email().equals(RVviewDto.getMember_email())) {
+			%>
+			<div class="button_container" style="float: right;">
+				<div class="delete_button">
+					<a class="upde"
+						href="SemiProjectServlet.do?command=admin_rvdelete&rv_id=${RVviewDto.rv_id }"><button
+							type="submit" class="btn btn-danger" style="text-align: right;">삭제</button></a>
+				</div>
+				<div class="update_button">
+					<a class="upde"
+						href="SemiProjectServlet.do?command=admin_rvupdateform&rv_id=${RVviewDto.rv_id }"><button
+							type="submit" class="btn btn-success" style="text-align: right;">수정</button></a>
+				</div>
+
+			</div>
+			<%
+				} else {
+
+				}
+			%>
 		</div>
-		<hr>
+		<br>
 		<hr>
 
 		<div class="subject_form">
@@ -86,37 +107,18 @@
 		<div class="content_form">
 			<div class="content">
 				<jsp:getProperty property="rv_content" name="RVviewDto" />
-				
-				
+			</div>
 
-<%
-    if(dto != null && dto.getMember_email().equals(RVviewDto.getMember_email())){
- %> 
-       <div class="button_container" style="float: right;"> 
-          <div class="update_button"> 
-             <a class="upde" href="SemiProjectServlet.do?command=admin_rvupdateform&rv_id=${RVviewDto.rv_id }"><button type="submit" class="btn btn-success" style="text-align:right;">수정</button></a> 
-          </div> 
-          <div class="delete_button"> 
-             <a class="upde" href="SemiProjectServlet.do?command=admin_rvdelete&rv_id=${RVviewDto.rv_id }"><button type="submit" class="btn btn-danger" style="text-align:right;">삭제</button></a> 
-          </div> 
-       </div> 
-<%
-    }else{
-      
-    }
-%>
-   </div>
+		</div>
+		<div style="text-align: right;">
+			<button type="button" class="btn btn-primary"
+				onclick="location.href='SemiProjectServlet.do?command=admin_rvlist'">목록으로</button>
+		</div>
+		<br> <br>
 
-</div>
-   <div style="text-align: right;">
-      <button type="button" class="btn btn-primary" onclick="location.href='SemiProjectServlet.do?command=admin_rvlist'">목록으로</button>
-   </div>
-   <br>
-   <br>
-   
-   
-   <!-- --------------------이전글,다음글----------------- -->
-  <%--  <div class="prev_next">
+
+		<!-- --------------------이전글,다음글----------------- -->
+		<%--  <div class="prev_next">
       <div class="prev">
          <b>이전글</b>
          <c:choose>
@@ -147,9 +149,9 @@
       </div>
    </div>
              --%>
-</div>
+	</div>
 
-<%@ include file="inc/footer.jsp" %>
+	<%@ include file="inc/footer.jsp"%>
 
 </body>
 </html>

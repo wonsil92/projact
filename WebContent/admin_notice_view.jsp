@@ -11,19 +11,19 @@
 %>
 <!-- C태그 사용 -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!-- 비회원일때 = topbar.jsp / 회원일 때 usertopbar.jsp / 관리자일 떄 admintopbar.jsp-->
 <c:if test="${dto eq null }">
-	<%@include file="inc/topbar.jsp" %>
+	<%@include file="inc/topbar.jsp"%>
 </c:if>
 
 <c:if test="${dto.getMember_role() eq 'ADMIN' }">
-	<%@ include file="inc/admintopbar.jsp" %>
-	
+	<%@ include file="inc/admintopbar.jsp"%>
+
 </c:if>
 
 <c:if test="${dto.getMember_role() eq 'USER' }">
-	<%@ include file="inc/usertopbar.jsp" %>
+	<%@ include file="inc/usertopbar.jsp"%>
 </c:if>
 
 <!DOCTYPE html>
@@ -53,10 +53,29 @@
 	<div class="container">
 		<div class="Review_header">
 			<h4>공지사항</h4>
-		</div>
-		<hr>
-		<hr>
+			<%
+				if (dto != null && dto.getMember_email().equals(NTviewDto.getMember_email())) {
+			%>
+			<div class="button_container" style="float: right;">
+				<div class="update_button">
+					<a class="upde"
+						href="SemiProjectServlet.do?command=admin_ntupdateform&nt_id=${NTviewDto.nt_id }"><button
+							type="submit" class="btn btn-success" style="text-align: right;">수정</button></a>
+				</div>
+				<div class="delete_button">
+					<a class="upde"
+						href="SemiProjectServlet.do?command=admin_ntdelete&nt_id=${NTviewDto.nt_id }"><button
+							type="submit" class="btn btn-danger" style="text-align: right;">삭제</button></a>
+				</div>
+			</div>
+			<%
+				} else {
 
+				}
+			%>
+		</div>
+		<br>
+		<hr>
 		<div class="subject_form">
 			<div class="subject">제목</div>
 			<div class="form-group">
@@ -73,41 +92,33 @@
 						name="NTviewDto" />
 				</div>
 				<div class="date_form">
-					작성일 :&nbsp;&nbsp;<fmt:formatDate value="${NTviewDto.nt_regdate }" pattern="yyyy.MM.dd" />
+					작성일 :&nbsp;&nbsp;
+					<fmt:formatDate value="${NTviewDto.nt_regdate }"
+						pattern="yyyy.MM.dd" />
 				</div>
 			</div>
 
-			<br>
-			<br>
+			<br> <br>
 			<!-- 글 내용이 들어가는 부분 -->
 			<div class="content_form">
 				<div class="content">
 					<jsp:getProperty property="nt_content" name="NTviewDto" />
 				</div>
 			</div>
-			<hr>
-<%
-    if(dto != null && dto.getMember_email().equals(NTviewDto.getMember_email())){
- %> 
-       <div class="button_container" style="float: right;"> 
-          <div class="update_button"> 
-             <a class="upde" href="SemiProjectServlet.do?command=admin_ntupdateform&nt_id=${NTviewDto.nt_id }"><button type="submit" class="btn btn-success" style="text-align:right;">수정</button></a> 
-          </div> 
-          <div class="delete_button"> 
-             <a class="upde" href="SemiProjectServlet.do?command=admin_ntdelete&nt_id=${NTviewDto.nt_id }"><button type="submit" class="btn btn-danger" style="text-align:right;">삭제</button></a> 
-          </div> 
-       </div> 
-<%
-    }else{
-      
-    }
-%>
-   </div>
 
-</div>
- 
-<!-- -----------------------댓글등록부분 ---------------------- -->
-<%-- <div class="comment_container">
+			<div style="text-align: right;">
+				<button type="button" class="btn btn-primary"
+					onclick="location.href='SemiProjectServlet.do?command=admin_ntlist'">목록으로</button>
+			</div>
+			<br>
+			<br>
+
+		</div>
+
+	</div>
+
+	<!-- -----------------------댓글등록부분 ---------------------- -->
+	<%-- <div class="comment_container">
    <form id="comment_form" method="post" action="CommentInsert.do" onsubmit="return comment_ajax(this);">
       <input type="hidden" name="command" value="insertRVComment"/>
       <input type="hidden" name="rv_id" value="${RVviewDto.rv_id }" />
@@ -127,15 +138,10 @@
    </form>
 </div>
  --%>
-   <div style="text-align: right;">
-      <button type="button" class="btn btn-primary" onclick="location.href='SemiProjectServlet.do?command=admin_ntlist'">목록으로</button>
-   </div>
-   <br>
-   <br>
-   
-   
-   <!-- --------------------이전글,다음글----------------- -->
-  <%--  <div class="prev_next">
+
+
+	<!-- --------------------이전글,다음글----------------- -->
+	<%--  <div class="prev_next">
       <div class="prev">
          <b>이전글</b>
          <c:choose>
@@ -166,8 +172,6 @@
       </div>
    </div>
              --%>
-</div>
 
-<%@ include file="inc/footer.jsp" %>
-
+	<%@ include file="inc/footer.jsp"%>
 </html>

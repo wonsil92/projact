@@ -806,13 +806,25 @@ public class SemiProjectServlet extends HttpServlet {
 
 		// 관리자 이용후기 게시판 목록 조회
 		else if (command.equals("admin_rvlist")) {
+			int r = 1;
+			//rownum null값 처리
+			if(request.getParameter("r") != null) {
+				r = Integer.parseInt(request.getParameter("r"));
+			}
+			
+			System.out.println(r);
+			
 			// 게시글들의 내용을 담기위해 list에 값을 담아주고
-			List<RVdocumentDto> list = reviewdao.selectAll();
+			List<RVdocumentDto> list = reviewdao.admin_rvlist(r);
+			RVdocumentDto rvcountdto = reviewdao.rvCount();
 
 			session.getAttribute("dto");
-
-			request.setAttribute("list", list);
+			
 			// 게시글들의 내용을 request객체에 담고 review_list로 게시판 정보를 가지고 이동
+			request.setAttribute("list", list);
+			request.setAttribute("rvcountdto", rvcountdto);
+			request.setAttribute("r", r);
+			
 			dispatch("admin_review_list.jsp", request, response); // forward 하나하나쓰기귀찮아서 메소드로만듦
 		}
 		// 관리자 이용후기 게시판글작성

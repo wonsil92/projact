@@ -43,14 +43,21 @@
 		<div class="Review_header">
 			<h4>Q&A게시판</h4>
 			<p>홈페이지에 대해 궁금한 점을 남겨주세요.</p>
-						<%
+			<%
 				if (dto != null && dto.getMember_email().equals(qaViewDto.getMember_email())) {
 			%>
-			<div id="updatediv">
-				<a class="upde"
-					href="SemiProjectServlet.do?command=admin_qaupdateform&qa_id=${qaViewDto.qa_id }">수정&nbsp;</a>
-				<a class="upde"
-					href="SemiProjectServlet.do?command=admin_qadelete&qa_id=${qaViewDto.qa_id }">삭제</a>
+			<div class="button_container" style="float: right;">
+				<div class="delete_button">
+					<a class="upde"
+						href="SemiProjectServlet.do?command=admin_qadelete&qa_id=${qaViewDto.qa_id }"><button
+							type="submit" class="btn btn-danger" style="text-align: right;">삭제</button></a>
+				</div>
+				<div class="update_button">
+					<a class="upde"
+						href="SemiProjectServlet.do?command=admin_qaupdateform&qa_id=${qaViewDto.qa_id }"><button
+							type="submit" class="btn btn-success" style="text-align: right;">수정</button></a>
+				</div>
+
 			</div>
 			<%
 				} else {
@@ -58,8 +65,8 @@
 				}
 			%>
 		</div>
+		<br>
 		<hr>
-
 		<div class="subject_form">
 			<div class="subject">제목</div>
 			<div class="form-group">
@@ -92,49 +99,11 @@
 				<jsp:getProperty property="qa_content" name="qaViewDto" />
 			</div>
 		</div>
-	</div>
-
-	<div align="center">
-		<button type="button" class="btn btn-sm"
-			onclick="location.href='SemiProjectServlet.do?command=admin_qalist'">목록으로</button>
-		<button type="button" class="btn btn-sm"
-			onclick="location.href='SemiProjectServlet.do?command=admin_qadelete&qa_id=${qaViewDto.qa_id }'">삭제</button>
-	</div>
-
-	<br>
-	<br>
-	<br>
-	<hr>
-
-
-	<div class="container">
-		<div class="comment_form">
-			<div class="comment_writer_form">
-				<div class="comment_writer">박우주</div>
-				<div class="date">2018-11-21</div>
-				<div class="apply">
-					<a href="#"><img src="img/arrow.png">답글</a>
-				</div>
-			</div>
-
-			<div class="comment_content">널 차버릴 거야~</div>
-			<hr>
+		<div style="text-align: right;">
+			<button type="button" class="btn btn-primary"
+				onclick="location.href='SemiProjectServlet.do?command=admin_qalist'">목록으로</button>
 		</div>
-
-		<div class="comment_content">
-			<textarea rows="3" cols="120">힘이 듭니다</textarea>
-			<div class="insert_button">
-				<button type="submit" class="btn btn-default">등록</button>
-			</div>
-			<hr>
-		</div>
-
-		<br>
-
-		<div class="prev_next">
-			<div class="prev">이전글</div>
-			<div class="next">다음글</div>
-		</div>
+		<br> <br>
 	</div>
 
 	<%@ include file="inc/footer.jsp"%>

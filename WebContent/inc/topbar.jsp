@@ -80,9 +80,9 @@ function email_check(){
    			
     		<div class="dropdown-menu">     		
     			<a class="dropdown-item"href="SemiProjectServlet.do?command=make_up_self"><strong style="color:dark;">Create My Page</strong></a>
-  				<a class="dropdown-item"href="SemiProjectServlet.do?command=list" class="is-current">User Reviews</a>
-  				<a class="dropdown-item"href="SemiProjectServlet.do?command=qalist">Q&nbsp;&&nbsp;A Board</a>
-  				<a class="dropdown-item"href="SemiProjectServlet.do?command=ntlist">Notice</a>
+  				<a class="dropdown-item"href="SemiProjectServlet.do?command=list"><strong style="color:dark;">User Reviews</strong></a>
+  				<a class="dropdown-item"href="SemiProjectServlet.do?command=qalist"><strong style="color:dark;">Q&nbsp;&&nbsp;A Board</strong></a>
+  				<a class="dropdown-item"href="SemiProjectServlet.do?command=ntlist"><strong style="color:dark;">Notice</strong></a>
 				<a class="dropdown-item"href="SemiProjectServlet.do?command=mypage"><strong style="color:dark;">My page</strong></a>
     		</div>
   		</div>

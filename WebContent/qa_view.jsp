@@ -59,11 +59,28 @@
 		<div class="Review_header">
 			<h4>Q&A게시판</h4>
 			<p>홈페이지에 대해 궁금한 점을 남겨주세요.</p>
+			<%
+				if (dto != null && dto.getMember_email().equals(qaViewDto.getMember_email())) {
+			%>
+			<div class="button_container">
+				<div class="update_button">
+					<a class="upde"
+						href="SemiProjectServlet.do?command=qaupdateform&qa_id=${qaViewDto.qa_id }"><button
+							type="submit" class="btn btn-primary" style="text-align: right;">수정</button></a>
+				</div>
+				<div class="delete_button">
+					<a class="upde"
+						href="SemiProjectServlet.do?command=qadelete&qa_id=${qaViewDto.qa_id }"><button
+							type="submit" class="btn btn-danger" style="text-align: right;">삭제</button></a>
+				</div>
+			</div>
+			<%
+				} else {
 
-
-		</div>
+				}
+			%>
+		<br>
 		<hr>
-
 		<div class="subject_form">
 			<div class="subject">제목</div>
 			<div class="form-group">
@@ -95,40 +112,7 @@
 				<!-- 게시글 내용 -->
 				<jsp:getProperty property="qa_content" name="qaViewDto" />
 			</div>
-			
 
-			<%
-				if (dto != null && dto.getMember_email().equals(qaViewDto.getMember_email())) {
-			%>
-			<div class="button_container">
-				<div class="update_button">
-					<a class="upde"
-						href="SemiProjectServlet.do?command=qaupdateform&qa_id=${qaViewDto.qa_id }"><button
-							type="submit" class="btn btn-primary" style="text-align: right;">수정</button></a>
-				</div>
-				<div class="delete_button">
-					<a class="upde"
-						href="SemiProjectServlet.do?command=qadelete&qa_id=${qaViewDto.qa_id }"><button
-							type="submit" class="btn btn-danger" style="text-align: right;">삭제</button></a>
-				</div>
-			</div>
-			<%
-				} else {
-
-				}
-			%>
-
-
-
-
-			<!-- <div class="button_container"> -->
-			<!-- 	<div class="update_button"> -->
-			<%-- 		<a class="upde" href="SemiProjectServlet.do?command=qaupdateform&qa_id=${qaViewDto.qa_id }"><button type="submit" class="btn btn-primary" style="text-align:right;">수정</button></a> --%>
-			<!-- 	</div> -->
-			<!-- 	<div class="delete_button"> -->
-			<%-- 		<a class="upde" href="SemiProjectServlet.do?command=qadelete&qa_id=${qaViewDto.qa_id }"><button type="submit" class="btn btn-danger" style="text-align:right;">삭제</button></a> --%>
-			<!-- 	</div> -->
-			<!-- </div> -->
 		</div>
 		<hr>
 	
@@ -158,7 +142,7 @@
 	<br>
 	<br>
 	
-	<div class="prev_next">
+			<div class="prev_next">
 		<div class="prev">
 			<b>이전글</b>
 			<c:choose>
@@ -188,9 +172,8 @@
 			</c:choose>
 		</div>
 	</div>
-				
 </div>
-
+</div>
 <%@ include file="inc/footer.jsp" %>
 
 <!-- 덧글 항목에 대한 템플릿 참조 -->

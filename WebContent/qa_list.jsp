@@ -27,8 +27,7 @@
 <c:if test="${dto != null }">
 	<%@ include file="inc/usertopbar.jsp" %>
 </c:if>
-	
-	<div class="container">
+
 		<div class="Qa_header">
 			<h4>Q&amp;A 게시판</h4>
        		  <p>건의사항 및 질문하는 공간입니다.</p>

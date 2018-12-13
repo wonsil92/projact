@@ -76,11 +76,10 @@ List<RVdocumentDto> list = dao.selectTen();
 
    <nav class="nav2" style="width: 100%;">                  <!-- 메뉴바 -->
       <a href="SemiProjectServlet.do?command=make_up_self"><strong style="color:dark;">Create My Page</strong></a>
-        <a href="SemiProjectServlet.do?command=list" class="is-current">User Reviews</a>
-        <a href="SemiProjectServlet.do?command=qalist">Q&nbsp;&&nbsp;A Board</a>
-        <a href="SemiProjectServlet.do?command=ntlist">Notice</a>
+        <a href="SemiProjectServlet.do?command=list" ><strong style="color:dark;">User Reviews</strong></a>
+        <a href="SemiProjectServlet.do?command=qalist"><strong style="color:dark;">Q&nbsp;&&nbsp;A Board</strong></a>
+        <a href="SemiProjectServlet.do?command=ntlist"><strong style="color:dark;">Notice</strong></a>
       <a href="SemiProjectServlet.do?command=mypage"><strong style="color:dark;">My page</strong></a>
-      
       <div class="nav-underline"></div>
    </nav>
 

@@ -46,11 +46,11 @@
 		<caption>~~</caption>
 		<colgroup>
 			<col width="10%" />
-			<col width="45%" />
+			<col width="35%" />
 			<col width="20%" />
 			<col width="15%" />
 			<col width="10%" />
-			
+			<col width="10%" />
 		</colgroup>
 		<thead>
 			<tr>
@@ -59,6 +59,7 @@
 				<th>이름</th>
 				<th>작성일</th>
 				<th>조회수</th>
+				<th>추천수</th>
 			</tr>
 		</thead>
       <c:choose>
@@ -80,6 +81,7 @@
                   <td>${dto.member_name }</td>
                  <td><fmt:formatDate value="${dto.rv_regdate }" pattern="yyyy.MM.dd" /></td>
                  <td>${dto.rv_view_cnt }</td>
+                 <td>${dto.rv_reco_cnt }</td>
                </tr>
             </c:forEach>
          </c:otherwise>

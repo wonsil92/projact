@@ -171,20 +171,21 @@ public class RVdocumentDao extends sqlMapConfig {
 	   
 	   
 //게시글전체출력
-public List<RVdocumentDto> admin_rvlist() {
+public List<RVdocumentDto> admin_rvlist(int r) {
 
  List<RVdocumentDto> res = new ArrayList<RVdocumentDto>();
  SqlSession session = null;
 
  // openSession(true) = autoCommit;
  session = getSqlSessionFactory().openSession(true);
- res = session.selectList(namespace + "admin_rvlist");
+ res = session.selectList(namespace + "admin_rvlist",r);
 
  session.close();
 
  return res;
 
 }
+
 
 
 //글작성

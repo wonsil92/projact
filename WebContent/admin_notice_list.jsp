@@ -37,12 +37,17 @@
 
 <br><br><br><br>
 
-			<h3>공지사항</h3>
-
+<div class="container">
+	<div class="row content" id="topmenu" style="width:100%">
+		<div class="col-md-12">
+			<h4>공지사항</h4>
+		</div>			
+	</div>
+</div>
 
 <!-- 테이블시작 -->
-<div class="boardcss_list_table">
-	<table class="list_table">
+<div class="container">
+	<table class="list_table" id="myTable">
 		<caption>~~</caption>
 		<colgroup>
 			<col width="10%" />
@@ -86,23 +91,15 @@
       </c:choose>
 		
 	</table>
+
+   <span>
+   		<br/>
+   		<button type="submit" class="btn btn-sm">선택 삭제</button>
+		<input type="button" value="글쓰기" onclick="location.href='SemiProjectServlet.do?command=admin_noticeinsertform'" class="btn btn-sm" style="float: right;">
+   </span>
 </div>
-<!-- 테이블 종료 -->
 
-<%
-   if(session.getAttribute("dto") != null) {
-%>
 
-   <!-- 등록버튼 시작 -->
-   <br>
-   <input type="button" value="글쓰기" onclick="location.href='SemiProjectServlet.do?command=admin_noticeinsertform'"  class="btn btn-primary" id="b1" style="float: right;">
-   <br>
-<!-- 등록버튼 종료 -->
-<%
-   } else {
-      
-   }
-%>
 
  <hr>
 <!--     <script src="js/jquery.min.js"></script> -->

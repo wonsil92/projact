@@ -65,22 +65,27 @@
 			<%
 				if (dto != null && dto.getMember_email().equals(RVviewDto.getMember_email())) {
 			%>
-			<div id="updatediv">
-				<a class="upde"
-					href="SemiProjectServlet.do?command=rvupdateform&rv_id=${RVviewDto.rv_id }">수정&nbsp;</a>
-				<a class="upde"
-					href="SemiProjectServlet.do?command=rvdelete&rv_id=${RVviewDto.rv_id }">삭제</a>
+			<div class="button_container" style="float: right;">
+				<div class="delete_button">
+					<a class="upde"
+						href="SemiProjectServlet.do?command=rvdelete&rv_id=${RVviewDto.rv_id }"><button
+							type="submit" class="btn btn-danger" style="text-align: right;">삭제</button></a>
+				</div>
+				<div class="update_button">
+					<a class="upde"
+						href="SemiProjectServlet.do?command=rvupdateform&rv_id=${RVviewDto.rv_id }"><button
+							type="submit" class="btn btn-success" style="text-align: right;">수정</button></a>
+				</div>
+
 			</div>
 			<%
 				} else {
 
 				}
 			%>
-
 		</div>
+		<br>
 		<hr>
-		<hr>
-
 		<div class="subject_form">
 			<div class="subject">제목</div>
 			<div class="form-group">
@@ -143,7 +148,7 @@
  				<hr>
 			</div>
 				<div class="comment_content">
-					<textarea rows="3" cols="120" name="rvcomment_content"></textarea>
+					<textarea rows="3" cols="135" name="rvcomment_content"></textarea>
 					<div class="insert_button">
 						<button type="submit" class="btn btn-default" onclick="loginCheck();">등록</button>
 					</div>

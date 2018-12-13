@@ -58,11 +58,11 @@
 				</button>
 
 				<div class="dropdown-menu">
-					<a class="dropdown-item" href="make_up_self.jsp">나만의 페이지 만들기</a> <a
-						class="dropdown-item" href="SemiProjectServlet.do?command=admin_rvlist">이용후기 관리</a> <a
-						class="dropdown-item" href="SemiProjectServlet.do?command=admin_qalist">Q&A 게시판 관리</a>
-						<a class="dropdown-item" href="SemiProjectServlet.do?command=admin_ntlist">공지사항</a>
-						<a class="dropdown-item" href="SemiProjectServlet.do?command=selectAll">회원 정보 조회</a>
+					<a class="dropdown-item" href="make_up_self.jsp"><strong style="color:dark;">Create My Page</strong></a> <a
+						class="dropdown-item" href="SemiProjectServlet.do?command=admin_rvlist"><strong style="color:dark;">User Reviews</strong></a> <a
+						class="dropdown-item" href="SemiProjectServlet.do?command=admin_qalist"><strong style="color:dark;">Q&nbsp;&&nbsp;A Board</strong></a>
+						<a class="dropdown-item" href="SemiProjectServlet.do?command=admin_ntlist"><strong style="color:dark;">Notice</strong></a>
+						<a class="dropdown-item" href="SemiProjectServlet.do?command=selectAll"><strong style="color:dark;">Member Views</strong></a>
 				</div>
 			</div>
 		</div>
