@@ -14,8 +14,8 @@ public class QABoardDto{
 	private String member_email;
 	private String member_pw;
 	private String member_role;
-	
 	private int r;//게시글 정렬 rownum 최신순 뽑기
+	private int count; //게시글 개수를 받을 변수를 선언해준다.
 	
 	//기본생성자
 	public QABoardDto() {
@@ -24,7 +24,7 @@ public class QABoardDto{
 	
 	//전체생성자
 	public QABoardDto(int qa_id, String qa_title, String qa_content, Date qa_regdate, int qa_view_cnt, int qa_reply_cnt,
-			int member_id, String member_name, String member_email, String member_pw, String member_role, int r) {
+			int member_id, String member_name, String member_email, String member_pw, String member_role, int r, int count) {
 		super();
 		this.qa_id = qa_id;
 		this.qa_title = qa_title;
@@ -38,6 +38,7 @@ public class QABoardDto{
 		this.member_pw = member_pw;
 		this.member_role = member_role;
 		this.r = r;
+		this.count = count;
 	}
 	
 	//게시판 수정하기(자기글만 수정되게)
@@ -155,5 +156,13 @@ public class QABoardDto{
 	
 	public void setR(int r) {
 		this.r = r;
+	}
+	
+	public int getCount() {
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
 	}
 }

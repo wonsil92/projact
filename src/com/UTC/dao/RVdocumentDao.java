@@ -15,7 +15,43 @@ public class RVdocumentDao extends sqlMapConfig {
 	private String namespace = "com.UTC.RVdocument.";
 
 
-	//게시글전체출력
+	//게시글 전체출력
+			public List<RVdocumentDto> selectAll(int r) {
+
+				List<RVdocumentDto> res = new ArrayList<RVdocumentDto>();
+				SqlSession session = null;
+
+				// openSession(true) = autoCommit;
+				try {
+					session = getSqlSessionFactory().openSession(true);
+					res = session.selectList(namespace + "rvlistAll",r);
+				}catch(Exception e) {
+					e.printStackTrace();
+				}finally {
+					session.close();
+				}
+				return res;
+			}
+			
+			//이용후기 게시판 게시글 개수
+			public RVdocumentDto rvCount() {
+				SqlSession session = null;
+				RVdocumentDto res = null;
+				
+				try {
+				session = getSqlSessionFactory().openSession(true);
+				res = session.selectOne(namespace+"rvcount");
+				}catch(Exception e) {
+					e.printStackTrace();
+				}finally {
+					session.close();
+				}
+				return res;
+				
+			}
+			
+	
+	//관리자 게시글 전체출력
 	public List<RVdocumentDto> selectAll() {
 
 		List<RVdocumentDto> res = new ArrayList<RVdocumentDto>();

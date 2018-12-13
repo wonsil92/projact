@@ -36,3 +36,76 @@
 /* input 상자 모양 */
 #search { width:200px; height:30px; text-align:center;  border: 1px solid #cfcfcf; vertical-align:middle; line-height:29px; }
 #search2 { width:100px; height:30px; text-align:center;  border: 1px solid #cfcfcf; vertical-align:middle; line-height:29px; }
+
+.Review_header {
+	padding-top: 150px;
+}
+
+.Review_header p {
+	font-size: 12px;
+}
+
+.Qa_header {
+	padding-top: 150px;
+}
+
+.Qa_header p {
+	font-size: 12px;
+}
+
+
+.boardcss_list_table {
+	margin-bottom: 50px;
+}
+
+td > a {
+	color: black;
+}
+
+td > a:hover {
+	color: black;
+/* 	text-decoration: none; */
+}
+
+.paginate{
+	text-align: center;
+	
+}
+
+ul {
+	list-style:none;
+	float: center;
+	display:inline;
+}
+
+ul li {
+	float:left;
+	text-align: center;
+}
+
+ul li .paging {
+	float:left;
+	padding:4px;
+	margin-right:5px;
+	width:30px;
+	color:#000;
+	font:bold 12px tahoma;
+	border:1px solid #eee;
+	text-align:center;
+	text-decoration:none;
+	
+}
+
+ul li .paging:hover, ul li .paging:focus {
+	color:#fff;
+	border:1px solid #f40;
+	background-color:#f40;
+}
+
+.paginate {
+	height: 38px;
+	margin-left: 45%;
+	margin-top: 120px;
+	margin-bottom: 70px;
+}
+

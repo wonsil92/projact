@@ -16,7 +16,7 @@
   
 	<title>UTC</title>
    	 	<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-		<link href="css/Reviewlist.css" rel="stylesheet">
+		<link href="css/Reviewlist.css?v=2" rel="stylesheet">
 		
 </head>
 <body>
@@ -86,6 +86,71 @@
       </c:choose>
 		
 	</table>
+<br>
+	<!-- 게시판 페이징 버튼 -->
+	<div class="paginate" style="text-align: center;">
+	<!-- 페이지 마지막 번호 -->
+    	 
+    	 <!-- 게시글 개수의 나머지가 있을 떄 페이지 한개 추가
+    	 	33 30 3
+    	  -->
+    	 <!-- 게시글을 10으로 나눈 나머지가 0보다 크면 
+    	 	ex) 게시글이 22개 있을 때 22%10=2.2>0 이므로
+    	 	총 페이지 개수는 3개가 나옴
+    	 -->
+    	<c:if test="${rvcountdto.count % 10 > 0}">
+    		<!-- 페이지 개수를 출력  -->
+    	 	<c:set value="${ (rvcountdto.count / 10)+1 }" var="totalPage"/>		
+    	</c:if>
+    	
+    	<c:if test="${rvcountdto.count%10 == 0 }">
+    		<c:set value="${(rvcountdto.count / 10) }" var="totalPage"></c:set>
+    	</c:if>
+    	<fmt:parseNumber value="${totalPage }" var="totalPage" integerOnly="true"/>
+	<ul>
+    <li><a href="SemiProjectServlet.do?command=list&r=1" class="paging"><<</a></li>
+	<c:choose>
+		<c:when test="${r != 1}">
+			<li><a href="SemiProjectServlet.do?command=list&r=${r-1 }"  class="paging"><︎</a></li>
+		</c:when>
+		<c:otherwise>
+<%
+		System.out.println("첫페이지에서는 이전버튼 안보임");
+%>
+		</c:otherwise>
+	</c:choose>   
+	</ul>
+	 
+	 
+	 <span>
+		<!-- 반복문  -->
+        <c:forEach var="i" begin="1" end="${totalPage }" step="1">
+            <ul>
+            <c:choose>
+                <c:when test="${i eq r}">
+                	<li><a href="SemiProjectServlet.do?command=list&r=${i }" class="paging" style="color: orange;">${i}</a></li>
+                </c:when>
+                <c:otherwise>
+                	<li><a href="SemiProjectServlet.do?command=list&r=${i }" class="paging">${i}</a></li>
+                </c:otherwise>
+            </c:choose>
+            </ul>
+        </c:forEach>
+    </span>
+    
+    <ul>
+    <c:choose>
+    	<c:when test="${r >= totalPage }">
+    		
+    	</c:when>
+    	<c:otherwise>
+    		<li><a href="SemiProjectServlet.do?command=list&r=${r+1 }" class="paging">></a></li>
+    	</c:otherwise>
+    </c:choose>
+    <!-- 마지막 페이지로 이동 -->
+    <li><a href="SemiProjectServlet.do?command=list&r=${totalPage }" class="paging">>></a></li> 
+	</ul>
+</div>	
 </div>
 <!-- 테이블 종료 -->
 
@@ -103,26 +168,12 @@
       
    }
 %>
-
- <hr>
+ 	<br><br><br>
 <!--     <script src="js/jquery.min.js"></script> -->
 <!--     <script src="js/bootstrap.min.js"></script> -->
 <!--     <script src="js/scripts.js"></script> -->
     <br>
-
+<%@ include file="inc/footer.jsp" %>
 </body>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-    <%@ include file="inc/footer.jsp" %>
+   
 </html>

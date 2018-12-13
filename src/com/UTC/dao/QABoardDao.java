@@ -22,7 +22,7 @@ public class QABoardDao extends sqlMapConfig {
 	 */
 	
 	//게시글 전체 출력
-	public List<QABoardDto> selectAll() {
+	public List<QABoardDto> selectAll(int r) {
 
 		List<QABoardDto> res = new ArrayList<QABoardDto>();
 		SqlSession session = null;
@@ -30,7 +30,7 @@ public class QABoardDao extends sqlMapConfig {
 		// openSession(true) = autoCommit;
 		try {
 		session = getSqlSessionFactory().openSession(true);
-		res = session.selectList(namespace + "qalistAll");
+		res = session.selectList(namespace + "qalistAll",r);
 		
 		}catch(Exception e){
 			e.printStackTrace();
@@ -39,6 +39,22 @@ public class QABoardDao extends sqlMapConfig {
 		}
 		return res;
 	}
+	
+	//QA게시글 개수
+		public QABoardDto qaCount() {
+			SqlSession session = null;
+			QABoardDto res = null;
+			
+			try {
+				session = getSqlSessionFactory().openSession(true);
+				res = session.selectOne(namespace+"qacount");
+			}catch(Exception e){
+				e.printStackTrace();
+			}finally {
+				session.close();
+			}
+			return res;
+		}
 	//========글쓰기========
 	public int qaWrite(QABoardDto dto) {
 			

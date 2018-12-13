@@ -67,9 +67,9 @@
 			%>
 			<div id="updatediv">
 				<a class="upde"
-					href="SemiProjectServlet.do?command=admin_rvupdateform&rv_id=${RVviewDto.rv_id }">수정&nbsp;</a>
+					href="SemiProjectServlet.do?command=rvupdateform&rv_id=${RVviewDto.rv_id }">수정&nbsp;</a>
 				<a class="upde"
-					href="SemiProjectServlet.do?command=admin_rvdelete&rv_id=${RVviewDto.rv_id }">삭제</a>
+					href="SemiProjectServlet.do?command=rvdelete&rv_id=${RVviewDto.rv_id }">삭제</a>
 			</div>
 			<%
 				} else {

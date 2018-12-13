@@ -6,32 +6,43 @@
 <mapper namespace="com.UTC.RVdocument">
 
 	<resultMap type="RVdocumentDto" id="RVdocumentMap">
-		<!-- property: dto의 필드명 column=db테이블 컬럼명 -->
-		<result property="rv_id" column="RV_ID" /> <!-- 게시글 번호 -->
-		<result property="rv_title" column="RV_TITLE" /> <!-- 글제목 -->
-		<result property="file_id" column="FILE_ID" /> <!-- 파일 -->
-		<result property="rv_view_cnt" column="RV_VIEW_CNT" /> <!-- 조회수 -->
-		<result property="rv_reco_cnt" column="RV_RECO_CNT" /> <!-- 추천수 -->
-		<result property="rv_reply_cnt" column="RV_REPLY_CNT" /> <!-- 댓글수 -->
-		<result property="member_id" column="MEMBER_ID" /> <!-- 회원번호 -->
-		<result property="rv_content" column="RV_CONTENT" /> <!-- 글 내용 -->
-		<result property="rv_regdate" column="RV_REGDATE" /> <!-- 작성일 -->
-		<result property="member_name" column="MEMBER_NAME" />
-		<result property="member_pw" column="MEMBER_PW" />
-		<result property="member_email" column="MEMBER_EMAIL" />
-		<result property="member_role" column="MEMBER_ROLE" />
-		<result property="r" column="R"/>
+	<!-- property: dto의 필드명  column=db테이블 컬럼명 -->
+		<result property="rv_id" column="RV_ID"/> <!-- 게시글 번호 -->
+		<result property="rv_title" column="RV_TITLE"/> <!-- 글제목 -->
+		<result property="file_id" column="FILE_ID"/> <!-- 파일번호 -->
+		<result property="rv_view_cnt" column="RV_VIEW_CNT"/> <!-- 조회수 -->
+		<result property="rv_reco_cnt" column="RV_RECO_CNT"/> <!-- 추천수 -->
+		<result property="rv_reply_cnt" column="RV_REPLY_CNT"/> <!-- 댓글수 -->
+		<result property="member_id" column="MEMBER_ID"/> <!-- 회원번호 -->
+		<result property="rv_content" column="RV_CONTENT"/> <!-- 글 내용 -->
+		<result property="rv_regdate" column="RV_REGDATE"/> <!-- 작성일 -->
+		<result property="member_name" column="MEMBER_NAME"/>
+		<result property="member_pw" column="MEMBER_PW"/>
+		<result property="member_email" column="MEMBER_EMAIL"/>
+		<result property="member_role" column="MEMBER_ROLE"/>
+		<result property="r" column="R"/> <!-- 페이징에 필요한 컬럼 -->
+		<result property="count" column="COUNT"/> <!-- 게시글의 개수를 뽑아오는 컬럼 -->
 	</resultMap>
-
+	
 	<!-- 이용후기게시판 게시글 전체 출력 -->
-	<select id="rvlistAll" resultMap="RVdocumentMap">
+	<select id="rvlistAll" parameterType="int" resultMap="RVdocumentMap">
 		<!-- SELECT * FROM RVDOCUMENT ORDER BY RV_ID DESC; -->
-		SELECT *
-		FROM MEMBER INNER JOIN RVDOCUMENT
-		ON MEMBER.MEMBER_ID =
-		RVDOCUMENT.MEMBER_ID
+		SELECT * FROM
+		(SELECT ROWNUM R, RV_ID, RV_TITLE, FILE_ID, RV_VIEW_CNT,RV_RECO_CNT,
+		RV_REPLY_CNT, MEMBER.MEMBER_ID, RV_CONTENT ,RV_REGDATE,MEMBER_NAME, MEMBER_PW,
+		MEMBER_EMAIL,MEMBER_ROLE
+		FROM (SELECT * FROM RVDOCUMENT ORDER BY RV_ID DESC) RVDOCUMENT INNER JOIN MEMBER
+		ON MEMBER.MEMBER_ID = RVDOCUMENT.MEMBER_ID
+		ORDER BY RV_ID DESC) WHERE R BETWEEN (#{r}*10)-9 AND (#{r}*10)
 		ORDER BY RV_ID DESC
-
+	</select>
+	
+	<!-- 이용후기 게시판 전체 게시글 개수 구하기 -->
+	<select id="rvcount" resultMap="RVdocumentMap">
+		<!-- count에 게시글의 개수를 담아서 사용가능!
+			${rvcountdto.count}
+		 -->
+		SELECT COUNT(*) COUNT FROM RVDOCUMENT
 	</select>
 
 	<!-- 글보기할때 조회수증가 -->

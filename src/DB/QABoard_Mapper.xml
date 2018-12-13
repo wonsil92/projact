@@ -8,6 +8,7 @@
    -->
 <mapper namespace="com.UTC.QAList">
 
+	
 	<resultMap type="QABoardDto" id="QABoardMap">
 	<!-- property: dto의 필드명  column=db테이블 컬럼명 -->
 		<result property="qa_id" column="QA_ID"/> <!-- 게시글 번호 -->
@@ -22,16 +23,25 @@
 		<result property="member_email" column="MEMBER_EMAIL"/>
 		<result property="member_role" column="MEMBER_ROLE"/>
 		<result property="r" column="R"/><!-- 게시글 정렬 rownum -->
+		<result property="count" column="COUNT"/>
 	</resultMap>
 	
 	<!-- QA게시판 게시글 전체 출력 -->
-	<select id="qalistAll" resultMap="QABoardMap">
-		<!-- SELECT * FROM QABOARD ORDER BY QA_ID DESC -->
-		SELECT *
-		FROM MEMBER INNER JOIN QABOARD
-		ON MEMBER.MEMBER_ID = QABOARD.MEMBER_ID
+	<select id="qalistAll" parameterType="int" resultMap="QABoardMap">
+		
+		<!-- 게시판 페이징(게시글을 10개씩 나눠서 가져오는 쿼리문) -->
+		SELECT * FROM
+		(SELECT ROWNUM R,QA_ID, QA_TITLE, QA_CONTENT, QA_REGDATE, QA_VIEW_CNT, QA_REPLY_CNT,
+        MEMBER.MEMBER_ID, MEMBER_NAME ,MEMBER_PW, MEMBER_EMAIL, MEMBER_ROLE
+		FROM (SELECT * FROM QABOARD ORDER BY QA_ID DESC) QABOARD INNER JOIN MEMBER
+		ON MEMBER.MEMBER_ID = QABOARD.MEMBER_ID)
+		WHERE R BETWEEN (#{r}*10)-9 AND (#{r}*10)	
 		ORDER BY QA_ID DESC
-
+	</select> 
+	
+	<!-- QA게시판의 전체 게시글 개수 구하기 -->
+	<select id="qacount" resultMap="QABoardMap">
+		SELECT COUNT(*) COUNT FROM QABOARD
 	</select>
 	
 	<!-- QA게시판 글보기 -->
