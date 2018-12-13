@@ -52,7 +52,7 @@
 			<col width="10%" />
 			<col width="10%" />
 		</colgroup>
-		<thead>
+		<thead> 
 			<tr> 
 				<th>번호</th>
 				<th>제목</th>
