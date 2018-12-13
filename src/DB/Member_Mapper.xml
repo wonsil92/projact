@@ -25,7 +25,7 @@
 		FROM MEMBER WHERE member_email=#{member_email} AND
 		member_pw=#{member_pw}
 	</select>
-
+ 
 	<!-- 회원선택 -->
 	<select id="selectUser" parameterType="int"
 		resultType="MemberDto">
