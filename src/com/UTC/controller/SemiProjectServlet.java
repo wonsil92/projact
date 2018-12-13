@@ -146,21 +146,21 @@ public class SemiProjectServlet extends HttpServlet {
 
 		// 회원탈퇴
 		else if (command.equals("deleteuser")) {
-			System.out.println("delete 넘어왔는지 확인");
-
-			int member_id = ((MemberDto) session.getAttribute("dto")).getMember_id();
-
-			int res = Memberdao.deleteUser(member_id);
+			System.out.println("1.deleteuser test");
+//			int member_id = ((MemberDto) session.getAttribute("dto")).getMember_id();
+//			System.out.println("2.deleteuser test"+member_id);
+//			MemberDto dto = new MemberDto();
+//			dto.setMember_id(member_id);
+			MemberDto dto = ((MemberDto) session.getAttribute("dto"));
+			int res = Memberdao.deleteUser(dto);
 
 			if (res > 0) {
-				session.invalidate();
-				alert("탈퇴하였습니다.", "SemiProjectServlet.do?command=index", request, response);
+			session.invalidate();
+			alert("탈퇴하였습니다.", "SemiProjectServlet.do?command=index", request, response);
 			} else {
-				alert("탈퇴 실패", "SemiProjectServlet.do?command=my_page", request, response);
+			alert("탈퇴 실패", "SemiProjectServlet.do?command=my_page", request, response);
 			}
-
-		}
-
+			}
 		// 관리자 회원 정보 조회
 		else if (command.equals("selectAll")) {
 
@@ -649,17 +649,20 @@ public class SemiProjectServlet extends HttpServlet {
 			}
 
 			// 관리자 회원 탈퇴 -------------------관리자 영역 시작--- 회원 정보 조회
-		} else if (command.equals("admin_deleteuser")) {
+	      } else if (command.equals("admin_deleteuser")) {
 
-			int member_id = Integer.parseInt(request.getParameter("member_id"));
-			int res = Memberdao.deleteUser(member_id);
-			if (res > 0) {
-				alert("회원이 탈퇴 되었습니다.", "SemiProjectServlet.do?command=admin_userlist", request, response);
-				System.out.println(member_id + " 탈퇴");
-			} else {
-				alert("회원 탈퇴 실패.", "SemiProjectServlet.do?command=admin_userlist", request, response);
-				System.out.println(member_id + " 탈퇴 실패");
-			}
+	         int member_id = Integer.parseInt(request.getParameter("member_id"));
+	         
+	         MemberDto dto = new MemberDto();
+	         dto.setMember_id(member_id);
+	         int res = Memberdao.deleteUser(dto);
+	         if (res > 0) {
+	            alert("회원이 탈퇴 되었습니다.", "SemiProjectServlet.do?command=admin_userlist", request, response);
+	            System.out.println(member_id + " 탈퇴");
+	         } else {
+	            alert("회원 탈퇴 실패.", "SemiProjectServlet.do?command=admin_userlist", request, response);
+	            System.out.println(member_id + " 탈퇴 실패");
+	         }
 			// 관리자 권한으로 다중 회원 탈퇴
 		} else if (command.equals("admin_multi_deleteuser")) {
 

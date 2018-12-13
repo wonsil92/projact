@@ -26,7 +26,7 @@ public class MakeBoardDao extends sqlMapConfig {
 			res = session.selectList(namespace + "makelistUser", member_id);
 			// res = session.selectList(namespace + "MakelistUser",member_id);
 
-			System.out.println(">>>" + res.get(0).getMember_id());
+//			System.out.println(">>>" + res.get(0).getMember_id());
 
 		} catch (Exception e) {
 			e.printStackTrace();

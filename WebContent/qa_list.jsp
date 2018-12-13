@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <% request.setCharacterEncoding("UTF-8"); %>
 <% response.setContentType("text/html; charset=UTF-8"); %>
-<%@page import="com.UTC.dto.MemberDto"%>
+
 <!-- c태그 사용 -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -16,38 +16,32 @@
   
 	<title>UTC</title>
    	 	<link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-		<link href="css/Reviewlist.css?v=2" rel="stylesheet">
+		<link href="css/Reviewlist.css" rel="stylesheet">
 </head>
 <body>
-<!-- 비회원일때 = topbar.jsp / 회원일 때 usertopbar.jsp / 관리자일 떄 admintopbar.jsp-->
+
+<!-- 비회원일때 = topbar.jsp / 회원일 때 usertopbar.jsp -->
 <c:if test="${dto eq null }">
 	<%@include file="inc/topbar.jsp" %>
 </c:if>
-
-<c:if test="${dto.getMember_role() eq 'ADMIN' }">
-	<%@ include file="inc/admintopbar.jsp" %>
-	
-</c:if>
-
-<c:if test="${dto.getMember_role() eq 'USER' }">
+<c:if test="${dto != null }">
 	<%@ include file="inc/usertopbar.jsp" %>
 </c:if>
-
-<br><br><br><br>
-			<img src="img/admin_qna.png" alt="질문답변관리" class="topimg" id="QnA-tab">
-			<h3>Q&amp;A 게시판</h3>
-         <p>건의사항 및 질문 하는 공간<p>
-         
+	
+	<div class="container">
+		<div class="Qa_header">
+			<h4>Q&amp;A 게시판</h4>
+       		  <p>건의사항 및 질문하는 공간입니다.</p>
+        </div>
 <!-- 테이블 시작 -->
 <div class="boardcss_list_table">
 	<table class="list_table">
 		<caption>~~</caption>
 		<colgroup>
-			<col width="10%" />
-			<col width="45%" />
-			<col width="20%" />
 			<col width="15%" />
-			<col width="10%" />
+			<col width="45%" />
+			<col width="15%" />
+			<col width="20%" />
 		</colgroup>
 		<thead>
 			<tr>
@@ -55,7 +49,6 @@
 				<th>제목</th>
 				<th>이름</th>
 				<th>작성일</th>
-				<th>조회수</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -71,11 +64,10 @@
 					<tr>
 						<td>${dto.qa_id }</td>
 						<td>
-							<a href="SemiProjectServlet.do?command=QAupdateViewCount&qa_id=${dto.qa_id }">${dto.qa_title }</a> 
+							<a href="SemiProjectServlet.do?command=qadetail&qa_id=${dto.qa_id }">${dto.qa_title }</a> 
 						</td>
 						<td>${dto.member_name }</td>
 						<td><fmt:formatDate value="${dto.qa_regdate }" pattern="yyyy.MM.dd" /></td>
-						<td>${dto.qa_view_cnt }</td>
 					</tr>
 				</c:forEach>
 			</c:otherwise>
@@ -178,6 +170,7 @@
 </div>
 
 
+ </div>
 
    <br>
 </body>

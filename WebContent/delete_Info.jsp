@@ -112,7 +112,6 @@
 	$("#close").click(function() {//쌍따옴표 홑따옴표 상관없음!!!!
 		$("#deleteModal").modal("hide");
 	});
-
 </script>
 
 </head>
@@ -176,9 +175,10 @@
 
 						<!-- Modal body -->
 						<div class="modal-body">
-							1. 개인정보는 탈퇴 시 바로 삭제되며 복구되지 않습니다.<br> 2. 작성한 문서 및 게시글은 삭제되지
-							않습니다.
+							1. 탈퇴 시 개인정보가 삭제되며 복구가 불가능합니다.<br>2. 탈퇴해도 작성한 문서 및 게시글은 삭제되지
+							않습니다.<br>3. 게시글 삭제를 원하실 경우 탈퇴 전 실행하여 주시기 바랍니다.
 						</div>
+
 
 						<!-- Modal footer -->
 						<div class="modal-footer">

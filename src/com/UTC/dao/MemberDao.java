@@ -118,20 +118,19 @@ public class MemberDao extends sqlMapConfig {
 			}
 			
 			//회원탈퇴
-			public int deleteUser(int member_id) {
-				int res=0;
-				SqlSession session = null;
-				
-				try {
-					session = getSqlSessionFactory().openSession(true);
-					res= session.delete(namespace+"deleteUser", member_id);
-				} catch (Exception e) {
-					e.printStackTrace();
-					session.close();
-				}
-				return res;
+			//회원탈퇴
+			public int deleteUser(MemberDto dto) {
+			int res=0;
+			SqlSession session = null;
+			try {
+			session = getSqlSessionFactory().openSession(true);
+			res= session.delete(namespace+"deleteUser", dto);
+			} catch (Exception e) {
+			e.printStackTrace();
+			session.close();
 			}
-	
+			return res;
+			}
 	
 			//-----------------------------관리자 영역 시작----------------------------
 	         

@@ -28,7 +28,7 @@
 				<button type="button"
 					class="btn btn-outline-danger btn-sm btn-block"
 					id="modal_UpdateInfo" class="nav-link" href="delete_Info.jsp"
-					data-toggle="modal" data-target="#myModal3">회원 탈퇴</button>
+					data-toggle="modal" data-target="#myModal">회원 탈퇴</button>
 			</div>
 			<div class="col-md-2">
 

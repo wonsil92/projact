@@ -136,7 +136,7 @@ public class QABoardDao extends sqlMapConfig {
 		res = session.selectList(namespace+"qalistUser", member_id);
 		//res = session.selectList(namespace + "qalistUser",member_id);
 		
-		System.out.println(">>>"+res.get(0).getMember_id());
+//		System.out.println(">>>"+res.get(0).getMember_id());
 		
 		}catch(Exception e){
 			e.printStackTrace();

@@ -5,79 +5,91 @@
 <mapper namespace="com.UTC.Member">
 
 	<resultMap type="com.UTC.dto.MemberDto" id="loginMap">
-		<result property="member_id" column="MEMBER_ID"/>
-		<result property="member_name" column="MEMBER_NAME"/>
-		<result property="member_pw" column="MEMBER_PW"/>
-		<result property="member_email" column="MEMBER_EMAIL"/>
-		<result property="member_role" column="MEMBER_ROLE"/>
+		<result property="member_id" column="MEMBER_ID" />
+		<result property="member_name" column="MEMBER_NAME" />
+		<result property="member_pw" column="MEMBER_PW" />
+		<result property="member_email" column="MEMBER_EMAIL" />
+		<result property="member_role" column="MEMBER_ROLE" />
 	</resultMap>
-		
-  	<!-- 회원가입 -->
- 	<insert id="insertUser" parameterType="MemberDto" statementType="PREPARED">
+
+	<!-- 회원가입 -->
+	<insert id="insertUser" parameterType="MemberDto"
+		statementType="PREPARED">
 		INSERT INTO MEMBER
 		VALUES(MEMBERSEQ.NEXTVAL,#{member_name},#{member_email},#{member_pw},'USER')
 	</insert>
 
 	<!-- 로그인 -->
 	<select id="login" parameterType="String" resultType="MemberDto">
-		SELECT * FROM MEMBER WHERE member_email=#{member_email} AND member_pw=#{member_pw}
+		SELECT *
+		FROM MEMBER WHERE member_email=#{member_email} AND
+		member_pw=#{member_pw}
 	</select>
-	
+
 	<!-- 회원선택 -->
-	<select id="selectUser" parameterType="int" resultType="MemberDto">
-	SELECT MEMBER_ID, MEMBER_NAME, MEMBER_PW, MEMBER_EMAIL
-	FROM MEMBER
-	WHERE MEMBER_ID=#{member_id}
+	<select id="selectUser" parameterType="int"
+		resultType="MemberDto">
+		SELECT MEMBER_ID, MEMBER_NAME, MEMBER_PW, MEMBER_EMAIL
+		FROM MEMBER
+		WHERE MEMBER_ID=#{member_id}
 	</select>
-	
+
 	<!-- 회원 조회 -->
 	<select id="selectAll" resultMap="loginMap">
+		SELECT MEMBER_ID, MEMBER_NAME,
+		MEMBER_PW, MEMBER_EMAIL, MEMBER_ROLE
+		FROM MEMBER
+		ORDER BY MEMBER_ID DESC
+	</select>
+
+	<!-- 회원탈퇴 -->
+	<update id="deleteUser" parameterType="MemberDto"
+		statementType="PREPARED">
+		UPDATE MEMBER
+		SET MEMBER_PW = '1', MEMBER_EMAIL = '1', MEMBER_ROLE='1'
+		WHERE MEMBER_ID = #{member_id}
+	</update>
+
+
+	<!-- 회원정보수정 -->
+	<update id="updateUser" parameterType="MemberDto"
+		statementType="PREPARED">
+		UPDATE MEMBER
+		SET MEMBER_NAME = #{member_name}, MEMBER_PW
+		= #{member_pw}, MEMBER_EMAIL = #{member_email}
+		WHERE MEMBER_ID =
+		#{member_id}
+	</update>
+
+
+	<!-- 관리자 역영 시작 (회원 정보 조회) -->
+
+	<!-- 회원 조회 -->
+	<select id="admin_userlist" resultMap="loginMap">
 		SELECT MEMBER_ID, MEMBER_NAME, MEMBER_PW, MEMBER_EMAIL, MEMBER_ROLE
 		FROM MEMBER
 		ORDER BY MEMBER_ID DESC
 	</select>
-	
-	<!-- 회원탈퇴 -->
-		<delete id="deleteUser" parameterType="int" >
+
+	<!-- 관리자 회원탈퇴 -->
+	<delete id="admin_deleteuser" parameterType="int">
 		DELETE FROM MEMBER
 		WHERE MEMBER_ID = #{member_id}
 	</delete>
-	
-	<!-- 회원정보수정 -->
-	<update id="updateUser" parameterType="MemberDto" statementType="PREPARED">
-		UPDATE MEMBER
-		SET MEMBER_NAME = #{member_name}, MEMBER_PW = #{member_pw}, MEMBER_EMAIL = #{member_email}
-		WHERE MEMBER_ID = #{member_id}
-	</update>
-	
-	
-<!-- 관리자 역영 시작 (회원 정보 조회) -->
-   
-   <!-- 회원 조회 -->
-   <select id="admin_userlist" resultMap="loginMap">
-      SELECT MEMBER_ID, MEMBER_NAME, MEMBER_PW, MEMBER_EMAIL, MEMBER_ROLE
-      FROM MEMBER
-      ORDER BY MEMBER_ID DESC
-   </select>
-   
-   <!-- 관리자 회원탈퇴 -->
-      <delete id="admin_deleteuser" parameterType="int" >
-      DELETE FROM MEMBER
-      WHERE MEMBER_ID = #{member_id}
-   </delete>
-   
-   <!-- 관리자 권한으로 다중 탈퇴 -->
-   <delete id="admin_multi_deleteuser" parameterType="map">
-      DELETE FROM MEMBER
-      WHERE MEMBER_ID IN
-      <foreach item ="member_id" collection="member_id" open="(" close=")" separator=", ">
-         #{member_id}
-      </foreach>
-   </delete>	
-	
-	
-	
-	
+
+	<!-- 관리자 권한으로 다중 탈퇴 -->
+	<delete id="admin_multi_deleteuser" parameterType="map">
+		DELETE FROM MEMBER
+		WHERE MEMBER_ID IN
+		<foreach item="member_id" collection="member_id" open="("
+			close=")" separator=", ">
+			#{member_id}
+		</foreach>
+	</delete>
+
+
+
+
 </mapper>	
 	
 	
