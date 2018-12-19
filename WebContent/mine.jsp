@@ -109,7 +109,6 @@
 										<th id="qaNum">#</th>
 										<th id="qaTitle">제목</th>
 										<th id="qaDate">작성일</th>
-										<th id="qaReply">답변</th>
 										<th id="qaDelete"></th>
 									</tr>
 								</thead>
@@ -128,7 +127,6 @@
 									<td>${dto.r }</td><!-- 이부분 체크 필요 -->
 									<td><a href="SemiProjectServlet.do?command=qadetail&qa_id=${dto.qa_id }">${dto.qa_title }</a></td>
 									<td><fmt:formatDate value="${dto.qa_regdate }" pattern="yyyy.MM.dd HH:mm" /></td>
-									<td>${dto.qa_reply_cnt}</td><!-- 갯수 뽑아내서 0이상이면 알파벳 O로 나오게할것인데 일단 갯ㅅ수라도 -->
 									<td><button type="button"
 								class="btn btn-outline-secondary btn-sm btn-block" onclick="location.href='SemiProjectServlet.do?command=myqadelete&qa_id=${dto.qa_id }'">삭제</button></td>
 								</tr>
@@ -149,7 +147,7 @@
 
 							<th id="rvNum">#</th>
 							<th id="rvTitle">제목</th>
-							<th id="rvDate">작성 시간</th>
+							<th id="rvDate">작성일</th>
 							<th id="rvDelete"></th>
 						</tr>
 					</thead>

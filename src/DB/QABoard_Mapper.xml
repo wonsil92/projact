@@ -79,6 +79,16 @@
 			WHERE MEMBER_ID = #{member_id})
 		ORDER BY R
 	</select>
+	
+<!-- 이전글 조회 -->
+     <select id="selectPrev" parameterType="QABoardDto" resultType="QABoardDto">
+        SELECT * FROM (SELECT * FROM QABOARD WHERE   QA_ID &lt; #{qa_id} ORDER BY QA_ID DESC) WHERE ROWNUM=1
+     </select>
+     
+     <!--  다음글 조회 -->   
+     <select id="selectNext" parameterType="QABoardDto" resultType="QABoardDto">
+        SELECT * FROM QABOARD WHERE   QA_ID &gt; #{qa_id} AND ROWNUM =1 ORDER BY QA_ID ASC
+     </select>
 
 	<!-- 글보기할때 조회수증가 -->
 	<update id="QAupdateViewCount" parameterType="int">

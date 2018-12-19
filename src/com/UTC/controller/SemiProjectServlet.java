@@ -238,15 +238,37 @@ public class SemiProjectServlet extends HttpServlet {
 
 		else if (command.equals("qadetail")) {
 			// 특정 게시글을 가져오기 위해 게시글 번호를 가져오고
-			int qa_id = Integer.parseInt(request.getParameter("qa_id"));
+            int qa_id = Integer.parseInt(request.getParameter("qa_id"));
+            /*
+             * 게시글의 정보를 객체에 담고 request객체에 정보를 담고 게시글의 정보를 가지고 qa_view 페이지로 이동
+             */
+            QABoardDto qaViewDto = QADao.qaView(qa_id);
 
-			/*
-			 * 게시글의 정보를 객체에 담고 request객체에 정보를 담고 게시글의 정보를 가지고 qa_view 페이지로 이동
-			 */
-			QABoardDto qaViewDto = QADao.qaView(qa_id);
-			request.setAttribute("qaViewDto", qaViewDto);
-
-			dispatch("qa_view.jsp", request, response);
+            System.out.println("qaViewDto >> " + qaViewDto.getQa_id());
+            System.out.println("test");
+            
+            //이전글 저장될 객체
+            QABoardDto prevDocument = null;
+            //다음글 저장될 객체
+            QABoardDto nextDocument = null;
+            try {
+               prevDocument = QADao.selectPrev(qaViewDto);
+               System.out.println("prevDocument >> " + prevDocument.getQa_title());
+               nextDocument = QADao.selectNext(qaViewDto);
+               System.out.println("nextDocument >> " + nextDocument.getQa_title());
+            } catch (Exception e) {
+               System.out.println("이전글 또는 다음글 조회에 실패했습니다.");
+            } 
+            
+            request.setAttribute("qaViewDto", qaViewDto);
+            request.setAttribute("prevDocument", prevDocument);
+            System.out.println("prevDocument >> " + prevDocument);
+            request.setAttribute("nextDocument", nextDocument);
+            System.out.println("nextDocument >> " + nextDocument);
+            dispatch("qa_view.jsp", request, response);
+			
+			
+			
 
 			// ========QA게시판 글쓰기==========
 		} else if (command.equals("qawrite")) {
@@ -498,15 +520,6 @@ public class SemiProjectServlet extends HttpServlet {
 			} else {
 				alert("조회수 증가 실패!", "review_write.jsp", request, response);
 			}
-		}
-		// 이용후기 선택 글 보기
-		else if (command.equals("RVselectOne")) {
-			int rv_id = Integer.parseInt(request.getParameter("rv_id"));
-			RVdocumentDto dto = reviewdao.RVselectOne(rv_id);
-			request.setAttribute("RVviewDto", dto);
-
-			dispatch("review_view.jsp", request, response);
-
 		}
 
 		// 이용후기 글수정

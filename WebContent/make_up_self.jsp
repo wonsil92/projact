@@ -141,12 +141,25 @@ window.onload = function() {
          }
      }
    
+   //div안에 null이면 안보이게
+     $(document).ready(function() {
+       var nullChk = document.getElementById("formBuilder").innerText;
+     if(nullChk=="null"){
+        $("#formBuilder").empty();
+     }else{
+        return false;
+     }
+  });
+   
    
 
 </script>
 </head>
 
 <body style="background: white;">
+
+<jsp:useBean id="makeViewDto" class="com.UTC.dto.MakeBoardDto" scope="request"></jsp:useBean>
+
    <input type="hidden" name="contentValue" value='<%=cookies.length%> '/>
    <input type="hidden" name="contentValue" value='<%=cookies.length >=2 ? cookies[1].getName() :"" %>'/>
    <input type="hidden" name="contentValue" value='<%=cookies.length >=3 ? cookies[2].getName() :"" %>'/>
@@ -287,11 +300,20 @@ window.onload = function() {
                
                <!-- 메뉴바 f-->
             </div>
-
-            <!-- 드래그한거 놓일 영역 -->
+            
+         <!-- 드래그한거 놓일 영역 -->
             <div class="col-md-5 bal_builder">
-               <div class="form_builder_area"></div>
+               <form id="frm" action="SemiProjectServlet.do" method="post">
+                  <input type="hidden" name="command" value="makewrite" />
+                  <input type="hidden" name="title" id="title" /> <input type="hidden" name="content" id="content" />
+                  <div class="form_builder_area" id="formBuilder">
+
+                  <jsp:getProperty property="make_content" name="makeViewDto"/>
+
+                  </div>
+                  </form>
             </div>
+            
             <!-- 폼 영역 -->
             <div class="col-md-5">
                <div class="col-md-12">
@@ -313,4 +335,3 @@ window.onload = function() {
 
 </body>
 </html>
-

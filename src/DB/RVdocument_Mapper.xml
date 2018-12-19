@@ -148,14 +148,16 @@
 	<update id="updateRecommend" parameterType="RVdocumentDto">
 		UPDATE RVDOCUMENT SET RV_RECO_CNT=RV_RECO_CNT+1 WHERE RV_ID=#{rv_id}
 	</update>
-	
-	<!-- 이전글 조회 -->
-  	<select id="selectPrev" parameterType="RVdocumentDto" resultType="RVdocumentDto">
-  		SELECT * FROM RVDOCUMENT WHERE	RV_ID &lt; #{rv_id} AND ROWNUM =1 ORDER BY RV_ID DESC
-  	</select>
   	
-  	<!-- 다음글 조회 -->
-  	<select id="selectNext" parameterType="RVdocumentDto" resultType="RVdocumentDto">
-		SELECT * FROM RVDOCUMENT WHERE	RV_ID &gt; #{rv_id} AND ROWNUM =1 ORDER BY RV_ID ASC
-  	</select>
+  	
+  	<!-- 이전글 조회 -->
+     <select id="selectPrev" parameterType="RVdocumentDto" resultType="RVdocumentDto">
+        SELECT * FROM (SELECT * FROM RVDOCUMENT WHERE   RV_ID &lt; #{rv_id} ORDER BY RV_ID DESC) WHERE ROWNUM=1
+     </select>
+     
+     <!--  다음글 조회 -->
+     <select id="selectNext" parameterType="RVdocumentDto" resultType="RVdocumentDto">
+        SELECT * FROM RVDOCUMENT WHERE   RV_ID &gt; #{rv_id} AND ROWNUM =1 ORDER BY RV_ID ASC
+     </select>
+
 </mapper>	

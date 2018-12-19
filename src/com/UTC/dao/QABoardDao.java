@@ -162,6 +162,49 @@ public class QABoardDao extends sqlMapConfig {
 		}
 		return res;
 	}
+	
+	//이전글 조회
+    public QABoardDto selectPrev(QABoardDto document) throws Exception {
+       SqlSession session = null;
+       QABoardDto result = null;
+       System.out.println("dao test1");
+    
+       try {
+          System.out.println("dao test2");
+          session = getSqlSessionFactory().openSession(true);
+          result = session.selectOne(namespace + "selectPrev", document);
+          System.out.println("result >> " + result);
+          System.out.println("dao test3");
+       } catch (NullPointerException e) {
+          throw new Exception("이전글이 없습니다.");
+       } catch (Exception e) {
+          e.printStackTrace();
+          throw new Exception("이전글 조회에 실패했습니다.");
+       }
+       return result;
+    }
+          
+    //다음글 조회
+    public QABoardDto selectNext(QABoardDto document) throws Exception {
+       SqlSession session = null;
+       QABoardDto result = null;
+       System.out.println("dao test4");
+    
+       try {
+          System.out.println("dao test5");
+          session = getSqlSessionFactory().openSession(true);
+          result = session.selectOne(namespace + "selectNext", document);
+          System.out.println("result >> " + result);
+          System.out.println("dao test");
+       } catch (NullPointerException e) {
+          throw new Exception("다음글이 없습니다.");
+       } catch (Exception e) {
+          e.printStackTrace();
+          throw new Exception("다음글 조회에 실패했습니다.");
+       }
+             
+       return result;
+    }
 
 	
 	
