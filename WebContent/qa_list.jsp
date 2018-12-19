@@ -37,10 +37,11 @@
 	<table class="list_table">
 		<caption>~~</caption>
 		<colgroup>
-			<col width="15%" />
+			<col width="10%" />
 			<col width="45%" />
 			<col width="15%" />
 			<col width="20%" />
+			<col width="10%" />
 		</colgroup>
 		<thead>
 			<tr>
@@ -48,6 +49,7 @@
 				<th>제목</th>
 				<th>이름</th>
 				<th>작성일</th>
+				<th>조회수</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -63,10 +65,11 @@
 					<tr>
 						<td>${dto.qa_id }</td>
 						<td>
-							<a href="SemiProjectServlet.do?command=qadetail&qa_id=${dto.qa_id }">${dto.qa_title }</a> 
+							<a href="SemiProjectServlet.do?command=QAupdateViewCount&qa_id=${dto.qa_id }">${dto.qa_title }</a> 
 						</td>
 						<td>${dto.member_name }</td>
 						<td><fmt:formatDate value="${dto.qa_regdate }" pattern="yyyy.MM.dd" /></td>
+						<td>${dto.qa_view_cnt }</td>
 					</tr>
 				</c:forEach>
 			</c:otherwise>
